@@ -1,0 +1,30 @@
+#1;;;;;;
+Ariane;1;2;3;4;Einheit;Beschreibung
+mL;;;;2793;kg;Nutzlast
+m;153270;36271;9369;807;kg;Masse Unterstufe
+mT;140000;33028;8238;685;kg;Treibstoffmasse
+mS;13270;3243;1313;122;kg;Strukturmasse
+m0;202510;49240;12969;3600;kg;Masse Unterrakete
+vG;2400;2585;3998;2708;m/s;Ausströmgeschwind.
+sigma;0.0655;0.0659;0.0872;0.0334;;Strukturmassenverhältnis
+mu;1;0.2432;0.064;0.0178;;Nutzlastverhältnis
+tB;138;130;563;300;s;Brenndauer
+ps;275;285;408;276;s;Spez. Impuls
+FT;2550000;710000;59000;6183;N;Schub
+deltaV;2821;2872;4032;572;m/s;Antriebsvermögen
+deltvges;2821;5693;9725;10297;m/s;Antriebsvermögen ges.
+#2;;;;;;
+Saturn V;1;2;3;NaN;Einheit;
+mL;;;100000;NaN;kg;Nutzlast
+m;2145000;458700;117250;NaN;kg;Masse Unterstufe
+mT;2010000;416000;104500;NaN;kg;Treibstoffmasse
+mS;135000;27522;7035;NaN;kg;Strukturmasse
+m0;2820950;675950;217250;NaN;kg;Masse Unterrakete
+vG;2761;4561;4549;NaN;m/s;Ausströmgeschwind.
+sigma;0.05;0.06;0.06;NaN;;Strukturmassenverhältnis
+mu;1;0.2396;0.077;NaN;;Nutzlastverhältnis
+tB;150;400;500;;s;Brenndauer
+ps;289;430;430;;s;Spez. Impuls
+FT;36000000;5100000;1020000;;N;Schub
+deltaV;3421;4396;2972;NaN;m/s;Antriebsvermögen
+deltvges;3421;7818;10790;NaN;m/s;Antriebsvermögen ges.
