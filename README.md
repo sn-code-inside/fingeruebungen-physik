@@ -12,14 +12,17 @@ Weitere [Zusatzmaterialien](https://www.physikalische-fingeruebungen.de/) zu den
 ## Band I - Physik der Bewegung
 ![<img src="bew/FingeruebungenSpringer1.jpg" width="250"/>](bew/FingeruebungenSpringer1.jpg)
 
-[Physik der Bewegung](https://github.com/sn-code-inside/physikalische-fingeruebungen)
+[Physik der Bewegung von Körpern](https://github.com/sn-code-inside/physikalische-fingeruebungen/tree/main/bew)
+
+[Physik des Kontinuums](https://github.com/sn-code-inside/physikalische-fingeruebungen/tree/main/kontmech)
 
 ## Band II - Himmelsmechanik und Astrodynamik
 ![<img src="hm/FingeruebungenSpringer2.jpg" width="250"/>](hm/FingeruebungenSpringer2.jpg)
 
-[Himmelsmechanik](https://github.com/sn-code-inside/physikalische-fingeruebungen)
+[Himmelsmechanik](https://github.com/sn-code-inside/physikalische-fingeruebungen/tree/main/hm)
 
-[Astrodynamik](https://github.com/sn-code-inside/physikalische-fingeruebungen)
+[Astrodynamik](https://github.com/sn-code-inside/physikalische-fingeruebungen/tree/main/adyn)
+
 
 
 
