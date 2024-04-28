@@ -4,7 +4,7 @@ Dieses GitHub-Repository ergänzt das Buch [Physikalische Fingerübungen: Astron
 
 Es entält Rohdaten und Matlab-Skripte zu den einzelnen Kapiteln.
 
-Weitere [Zusatzmaterialien](https://www.physikalische-fingeruebungen.de/) zu den Physikalische Fingerübungen finde sich unter dem [Link](https://www.physikalische-fingeruebungen.de/). 
+Weitere [Zusatzmaterialien](https://www.fingeruebungen-physik.de/) zu den Physikalische Fingerübungen finde sich unter dem [Link](https://www.fingeruebungen-physik.de/). 
 
 
 
