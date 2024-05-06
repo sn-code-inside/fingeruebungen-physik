@@ -2,18 +2,18 @@
 % AsteroidStreuung.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel "Physik der Bewegung" aus
-% "Physikalische Fingerübungen" von Michael Kaschke und Holger Cartarius
+% "FingerÃ¼bungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
 % -------------------------------------------------------------------------
 % Asteroiden-Streuung 
 % 
-% Programm berechnet Trajektorien für Asteroiden in der Erdbahn
-% Analogie zur Rutherford-Streuung ohne Rückstoß
-% Am 15. Februar 2013 passierte der ca. 45 m große Asteroid (367943) 
+% Programm berechnet Trajektorien fÃ¼r Asteroiden in der Erdbahn
+% Analogie zur Rutherford-Streuung ohne RÃ¼ckstoÃŸ
+% Am 15. Februar 2013 passierte der ca. 45 m groÃŸe Asteroid (367943) 
 % Duende in einer Entfernung von knapp 28.000 km die Erde, also noch 
-% unterhalb der Umlaufbahn der geostationären Satelliten.
+% unterhalb der Umlaufbahn der geostationÃ¤ren Satelliten.
 % Streuteilchen: Asteroid
 % Streuzentrum:  Erde 
 % -------------------------------------------------------------------------
@@ -39,7 +39,7 @@ mA  = rhoA*(4/3)*pi*(DA/2)^3;   % Asteroidenmasse in kg
 RZ = 0.0; 
 vinf = 4000;                    % Geschwindigkeit relativ zur Erde m/s
 En  = mA*vinf^2/2;              % Energie in Ws 
-b   = 25e6;                     % Stoßparameter in m
+b   = 25e6;                     % StoÃŸparameter in m
 x10 = 10*b;                     % Initiale x Position --> unendlich
 y10 = b;                        % Initiale y Position = b
 % initiales dxdt basierend auf Energy En Richtung Ziel, umgekehrtes Vorzeichen zu x10
@@ -58,8 +58,8 @@ omegaM  = sqrt((GE+GM)/RME^3);  % Umlauffrequenz Mond
 
 xM = RME*cos(omegaM*tout+phi0);
 yM = RME*sin(omegaM*tout+phi0);
-epsilon = b*vinf^2/G/mE;        % Exzentrizität
-phi_asy = acosd(-1/epsilon);    % Asymptotenöffnungswinkel
+epsilon = b*vinf^2/G/mE;        % ExzentrizitÃ¤t
+phi_asy = acosd(-1/epsilon);    % AsymptotenÃ¶ffnungswinkel
 
 [nr,nc]=size(Yout);             % Zeilen und spalten
 L=15;                           % Betrachtungsfenster in units of b
@@ -121,7 +121,7 @@ set(h,'FontSize',14)
 str1(1,:) = string(cat(2,' \it b       \rm  = ',num2str(b/1000,'%4.0f'),' km  '));
 str1(2,:) = cat(2,' \it v_{inf} \rm     = ',num2str(vinf/1000,'%3.0f'), ' km/s');
 str1(3,:) = string(cat(2,' \it r_{min} \rm    = ',num2str(rmin/1000,'%3.0f'), ' km  '));
-str1(4,:) = cat(2,' \phi_{asy}      = ',num2str(phi_asy,'%4.1f'), ' Â°');
+str1(4,:) = cat(2,' \phi_{asy}      = ',num2str(phi_asy,'%4.1f'), ' Ã‚Â°');
 str1(5,:) = cat(2,' \epsilon          = ',num2str(epsilon,'%4.3f'), ' ');
 for k = 1:5 
    text(L*1.05,-L+(5-k)*2, str1(k,:),'FontSize',12,'FontWeight','normal');
@@ -156,7 +156,7 @@ end
 % -------------------------------------------------------------------------
 function dY = dgl_ruther(t, Y, GE, GM, RME, omegaM, phi0)
     %  Berechnung im Schwerpunktsystem, Erde als Schwerpunkt angenommen mE>>mM
-    %  Es muss ein Spaltenvektor zurückgegeben werden 
+    %  Es muss ein Spaltenvektor zurÃ¼ckgegeben werden 
     dY     =  zeros(4,1); 
     r  = sqrt(Y(1).^2 + Y(3).^2);
     xM = RME*cos(omegaM*t+phi0);
