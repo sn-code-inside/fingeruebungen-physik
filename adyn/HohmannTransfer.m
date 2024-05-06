@@ -2,7 +2,7 @@
 % HohmannTransfer.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel "Astrodynamik" aus
-% "Physikalische Fingerübungen" von Michael Kaschke und Holger Cartarius
+% "Fingerübungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
