@@ -29,7 +29,7 @@ dt1 = datetime('2020-01-01 00:00:0');
 T1 = juliandate(dt1); % Julianisches Datum  ET
 dt2 = datetime('2020-01-01 01:00:00');
 T2 = juliandate(dt2); % Julianisches Datum  ET
-NPoints = 5001;
+NPoints = 1001;
 T_vector=linspace(T1,T2,NPoints);
 
 % Stationen
@@ -43,7 +43,7 @@ LocStr(2,:) = "Marienham (S)";
 aP   = RE+900;
 eP   = 0.0;
 iP   = 95; 
-OmegaP = 140;
+OmegaP = 135;
 omegaP = 0;
 TPn  = 2*pi*sqrt(aP^3/GME)/86400;
 M    = 20;
@@ -104,7 +104,7 @@ hoehe1 = atan2d(S(3,:),(sqrt(S(1,:).^2+S(2,:).^2)));
 XS2 = xS - xB(:,2); 
 distance2 = vecnorm(XS2);
 eO = [-sind(lambdaB(2));cosd(lambdaB(2));0];
-eN = [-sind(phiB(2))*cosd(lambdaB(2));,-sind(phiB(2))*sind(lambdaB(2));cosd(phiB(2))];
+eN = [-sind(phiB(2))*cosd(lambdaB(2));-sind(phiB(2))*sind(lambdaB(2));cosd(phiB(2))];
 eZ = [cosd(phiB(2))*cosd(lambdaB(2));cosd(phiB(2))*sind(lambdaB(2));sind(phiB(2))];
 U  = [eO,eN,eZ]';
 S  = mtimes(U,XS2);

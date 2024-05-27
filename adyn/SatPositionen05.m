@@ -2,7 +2,7 @@
 % SatPositionen03.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel "Astrodynamik" aus
-% "FingerÃ¼bungen der Physik" von Michael Kaschke und Holger Cartarius
+% "Physikalische Fingerübungen" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
@@ -25,51 +25,49 @@ Style = ["-", "-.", ":", "--", ":"];
 % Parameter
 GME = 398600.4415;  % in km^3/s^2
 RE  = 6378;         % in km
-dt1 = datetime('2020-03-11 00:00:0');
+dt1 = datetime('2020-03-11 16:00:0');
 T1 = juliandate(dt1); % Julianisches Datum  ET
-dt2 = datetime('2020-03-11 16:00:00');
+dt2 = datetime('2020-03-12 04:00:00');
 T2 = juliandate(dt2); % Julianisches Datum  ET
 NPoints = 5001;
 T_vector=linspace(T1,T2,NPoints);
 
-xB = 1344;
-yB = 6068;
-zB = 1429;
 
 % Stationen
-phi2     = atan2d(zB,sqrt(xB^2+yB^2));
-lambda2  = atan2d(yB,xB);
 
-phiB     = [51,phi2];  %1 Görlitz  2 %Indien
-lambdaB  = [15,lambda2];  
-LocStr(1,:) = "Görlitz (D)";
-LocStr(2,:) = "Indien";
-%% VorwÃ¤rtsrechnung aus Bahnparametern
+phiB1    = 10;  %1 Indien  
+lambdaB1 = 75;  
+phiB2    = 55;  %2 Russland
+lambdaB2 = 75;  
+LocStr(2,:) = "Russland";
+LocStr(1,:) = "Indien";
 
-% Berechnung Bahn nach KeplerlÃ¶sung
-aP   = 28000;
-eP   = 0.75;
-iP   = 21; 
-OmegaP = 360;
-omegaP = 180;
+%% Vorwärtsrechnung aus Bahnparametern
+
+aP   = 26555;
+eP   = 0.72;
+iP   = 63.4; 
+OmegaP = 135;
+omegaP = 270;
 TPn  = 2*pi*sqrt(aP^3/GME)/86400;
-M    = 20;
+M    = 0;
+
 SatHEO.BaPa =[aP , eP, iP , M, OmegaP, omegaP];
-SatHEO.Name = 'HEO-Satellit';
+SatHEO.Name = 'Molniya-Satellit';
 SatData = SatPQR(T_vector, SatHEO, GME);
-lat1(:) = rad2deg(SatData.el);
+lat(:) = rad2deg(SatData.el);
 theta = GMSTsat(T_vector);
-lon1(:) = wrapTo360(rad2deg(SatData.az)-theta);
+lon(:) = wrapTo360(rad2deg(SatData.az)-theta);
 
 fprintf('\n');
-fprintf('Bahnparameter fÃ¼r Bahnberechnung nach Kepler\n');
-fprintf('\n Zeit  = %s', dt1);
+fprintf('Bahnparameter für Bahnberechnung nach Kepler\n');
+fprintf('\n Zeit  = %s - %s ', dt1, dt2);
 fprintf('\n');
-fprintf('\n a     = %8.2f km  (GroÃŸe Halbachse)', aP);
-fprintf('\n e     = %8.5f     (ExzentrizitÃ¤t)', eP);
+fprintf('\n a     = %8.2f km  (Große Halbachse)', aP);
+fprintf('\n e     = %8.5f     (Exzentrizität)', eP);
 fprintf('\n i     = %8.2f °   (Inklination)', iP);
-fprintf('\n Omega = %8.2f °    (Rektasz. aufst. Knoten)', OmegaP);
-fprintf('\n omega = %8.2f °   (Argument PerigÃ¤um)', omegaP);
+fprintf('\n Omega = %8.2f °   (Rektasz. aufst. Knoten)', OmegaP);
+fprintf('\n omega = %8.2f °   (Argument Perigäum)', omegaP);
 fprintf('\n M     = %8.2f °   (Mittlere Anomalie)', M);
 fprintf('\n TP    = %8.2f min (Umlaufzeit)', TPn*24*60);
 fprintf('\n');
@@ -80,40 +78,46 @@ fprintf('\n');
 titlestr = strcat(SatHEO.Name,' Ground Track');
 figure('name',titlestr);
 gx = geoaxes;
-geoplot(gx, lat1(:),lon1(:),'+',...
+geoplot(gx, lat(:),lon(:),'+',...
         'MarkerSize',1,'Color', Colors(2,:),'LineWidth', 2);
 hold on
-geoplot(gx, phiB(1),lambdaB(1),'o',...
+geoplot(gx, phiB1,lambdaB1,'o',...
         'MarkerSize',5,'Color', Colors(4,:),'LineWidth', 2);
-geoplot(gx, phiB(2),lambdaB(2),'d',...
+geoplot(gx, phiB2,lambdaB2,'d',...
         'MarkerSize',5,'Color', Colors(4,:),'LineWidth', 2);
 geobasemap(gx,'bluegreen')
-geolimits([-60 60],[0 +360])
+geolimits([-60 60],[-120 +240])
 title(titlestr);
 set(gca,'FontSize',14);
 
-%% Topozentrische Beobachtungsberechnung
+%% Topozentrische Beobachtungsberechnung Indien
 
-xS  = aP*[cosd(lat1).*cosd(lon1);cosd(lat1).*sind(lon1);sind(lat1)];
-xB = RE*([cosd(phiB).*cosd(lambdaB);cosd(phiB).*sind(lambdaB);sind(phiB)]);
+r1     = SatData.r;
+xS1 = r1.*[cosd(lat).*cosd(lon);cosd(lat).*sind(lon);sind(lat)];
 
-%Görlitz
-XS1 = xS - xB(:,1); 
+
+xB1 = RE*[cosd(phiB1).*cosd(lambdaB1);cosd(phiB1).*sind(lambdaB1);sind(phiB1)];
+XS1 = xS1- xB1; 
 distance1 = vecnorm(XS1);
-eO = [-sind(lambdaB(1));cosd(lambdaB(1));0];
-eN = [-sind(phiB(1)).*cosd(lambdaB(1));-sind(phiB(1)).*sind(lambdaB(1));cosd(phiB(1))];
-eZ = [cosd(phiB(1)).*cosd(lambdaB(1));cosd(phiB(1)).*sind(lambdaB(1));sind(phiB(1))];
+
+eO = [-sind(lambdaB1);cosd(lambdaB1);0];
+eN = [-sind(phiB1).*cosd(lambdaB1);-sind(phiB1).*sind(lambdaB1);cosd(phiB1)];
+eZ = [cosd(phiB1).*cosd(lambdaB1);cosd(phiB1).*sind(lambdaB1);sind(phiB1)];
 U  = [eO,eN,eZ]';
 S  = mtimes(U,XS1);
 Az1    = atan2d(S(1,:),S(2,:));
 hoehe1 = atan2d(S(3,:),(sqrt(S(1,:).^2+S(2,:).^2)));
 
-%Umea
-XS2 = xS - xB(:,2); 
+
+%% Topozentrische Beobachtungsberechnung Russland
+
+xB2 = RE*[cosd(phiB2).*cosd(lambdaB2);cosd(phiB2).*sind(lambdaB2);sind(phiB2)];
+XS2 = xS1- xB2; 
 distance2 = vecnorm(XS2);
-eO = [-sind(lambdaB(2));cosd(lambdaB(2));0];
-eN = [-sind(phiB(2))*cosd(lambdaB(2));-sind(phiB(2))*sind(lambdaB(2));cosd(phiB(2))];
-eZ = [cosd(phiB(2))*cosd(lambdaB(2));cosd(phiB(2))*sind(lambdaB(2));sind(phiB(2))];
+
+eO = [-sind(lambdaB2);cosd(lambdaB2);0];
+eN = [-sind(phiB2).*cosd(lambdaB2);-sind(phiB2).*sind(lambdaB2);cosd(phiB2)];
+eZ = [cosd(phiB2).*cosd(lambdaB2);cosd(phiB2).*sind(lambdaB2);sind(phiB2)];
 U  = [eO,eN,eZ]';
 S  = mtimes(U,XS2);
 Az2    = atan2d(S(1,:),S(2,:));
@@ -154,7 +158,7 @@ p(2)=plot(datetime(SatData.Time,'ConvertFrom','juliandate'),Az2,...
 grid on;
 hp1 = title('Höhe und Azimut','FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
-hp2=legend(p(1:2),LocStr(1:2,:),'location','northeast','NumColumns',1);
+hp2=legend(p(1:2),LocStr(1:2,:),'location','south','NumColumns',1);
 set(hp2,'FontSize',14,'FontWeight','normal');
 legend box off
 set(gca,'FontSize',14);
@@ -171,7 +175,7 @@ ylim([0,1.1*max(max(distance1),max(distance2))]);
 grid on;
 hp1 = title('Entfernung','FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
-hp2=legend(LocStr(1:2,:),'location','southeast','NumColumns',1);
+hp2=legend(LocStr(1:2,:),'location','south','NumColumns',1);
 set(hp2,'FontSize',14,'FontWeight','normal');
 legend box off
 set(gca,'FontSize',14);

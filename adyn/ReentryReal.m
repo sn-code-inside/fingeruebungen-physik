@@ -9,7 +9,7 @@
 % -------------------------------------------------------------------------
 % 
 % Programm berechnet die Dynamik des Wiedereintritts eines Raumschiffes
-% in die ErdatmosphÃ¤re.
+% in die Erdatmosphäre.
 %
 %--------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ cwD        = 2*kappaD*mL/rho0/H0; % Drag Widerstandsbeiwert x FlÃ¤che km^2
 facAD      = [0;0.1;0.2;0.3;0.4;0.5];
 cwAvec     = facAD*cwD;           % Auftriebswiderstandswert x FlÃ¤che km^2 
 
-% Barometrische HÃ¶henformel
+% Barometrische Höhenformel
 rho        = @(h)rho0*exp(-h/H0);  
 
 % AB fÃƒÂ¼r DGL
@@ -83,7 +83,7 @@ tmax = round(1.25*sqrt(2*hRe/gE/sin(gammaRe))/100)*100;
 xmax = round(1.5*hRe/tan(gammaRe)/200)*200;
 hmax = 125;
 tspan1 = linspace(0,tmax,1001);
-% Schleife Ã¼ber verschieden Drag/AuftriebsverhÃ¤ltnisse
+% Schleife über verschieden Drag/Auftriebsverhältnisse
 for k=1:length(cwAvec)
     P1.facAD    = facAD(k);
     [t,Y1]      = ode45(@DGL_Reentry, tspan1, AB1, opts, P1, rho);
@@ -113,13 +113,13 @@ for k=1:length(cwAvec)
                   string(num2str(facAD(k),'%3.1f'))]);
 end    
 grid on
-str= strjoin(["h(x),  \gamma_{Re} := ",strgamma,'Â°']);
+str= strjoin(["h(x),  \gamma_{Re} := ",strgamma,'°']);
 grid on;
 hp1 = title(str,'FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
 hp2=legend(p,lgdstr,'Location','northeast','NumColumns',2); 
 set(hp2,'FontSize',14,'FontWeight','normal'); 
-axis([0, xmax, 0 hmax]);
+axis([0, xmax, 0 hmax])
 xlabel('x in km','FontSize',14); 
 ylabel('h in km','FontSize',14)
 legend box off;
@@ -134,7 +134,7 @@ for k=1:length(cwAvec)
                   string(num2str(facAD(k),'%3.1f'))]);
 end    
 grid on
-str= strjoin(["v(h),  \gamma_{Re} := ",strgamma,'Â°']);
+str= strjoin(["v(h),  \gamma_{Re} := ",strgamma,'°']);
 grid on;
 hp1 = title(str,'FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
@@ -154,7 +154,7 @@ hold on
 for k=1:length(cwAvec)
     p(k)= plot(t1(k,:),h1(k,:),'color',Colors(k,:),'Linewidth',2);
 end    
-str= strjoin(["h(t), \gamma_{Re} := ",strgamma,'Â°']);
+str= strjoin(["h(t), \gamma_{Re} := ",strgamma,'°']);
 hp1 = title(str,'FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
 hp2=legend(p,lgdstr,'Location','northeast','NumColumns',2); 
@@ -166,12 +166,14 @@ ylabel('h in km','FontSize',14)
 grid on
 set(gca,'FontSize',16);
 
+dde23
+
 subplot(2,1,2)
 hold on
 for k=1:length(cwAvec)
     p(k)= plot(t1(k,:),v1(k,:),'color',Colors(k,:),'Linewidth',2);
 end    
-str= strjoin(["v(t), \gamma_{Re} := ",strgamma,'Â°']);
+str= strjoin(["v(t), \gamma_{Re} := ",strgamma,'°']);
 hp1 = title(str,'FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
 hp2=legend(p,lgdstr,'Location','northeast','NumColumns',2); 
@@ -192,7 +194,7 @@ hold on
 for k=1:length(cwAvec)
     p(k)= plot(t1(k,:),a1(k,:),'color',Colors(k,:),'Linewidth',2);
 end    
-str= strjoin(["a(t), \gamma_{Re} := ",strgamma,'Â°']);
+str= strjoin(["a(t), \gamma_{Re} := ",strgamma,'°']);
 hp1 = title(str,'FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
 hp2=legend(p,lgdstr,'Location','southeast','NumColumns',2); 
@@ -214,14 +216,14 @@ for k=1:length(cwAvec)
     p(k)= plot(t1(k,:),rad2deg(gamma1(k,:)),...
           'color',Colors(k,:),'Linewidth',2);
 end    
-str= strjoin(["FPA(t), \gamma_{Re} := ",strgamma,'Â°']);
+str= strjoin(["FPA(t), \gamma_{Re} := ",strgamma,'°']);
 hp1 = title(str,'FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
 hp2=legend(p(1:k),lgdstr(1:k,:),'location','southeast','NumColumns',2);
 set(hp2,'FontSize',14,'FontWeight','normal'); 
 axis([0, tmax, -20 100]);
 xlabel('t in s','FontSize',14); 
-ylabel('\gamma in Â°','FontSize',14)
+ylabel('\gamma in °','FontSize',14)
 legend box off;
 grid on
 set(gca,'FontSize',16);

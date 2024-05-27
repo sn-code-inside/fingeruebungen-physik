@@ -37,7 +37,7 @@ T1 = juliandate(dt1); % Julianisches Datum  ET
 
 dt2 = datetime('2000-01-01 09:00:00');
 T2 = juliandate(dt2); % Julianisches Datum  ET
-NPoints = 5001;
+NPoints = 1001;
 T_vector=linspace(T1,T2,NPoints);
 
 aPn  = 8000;
@@ -67,7 +67,7 @@ NPoints = 5001;
 T_vector=linspace(T1,T2,NPoints);
 
 aPn  = 26555;
-SatHEO.BaPa =[aPn, 0.7222, 63.4, 0, 120, 270];
+SatHEO.BaPa =[aPn, 0.72, 63.4, 0, 0, 270];
 SatHEO.Name = 'HEO';
 SatData = SatPQR(T_vector, SatHEO, GME);
 lat1(:) = rad2deg(SatData.el);
@@ -78,7 +78,6 @@ lon1(:) = wrapTo360(rad2deg(SatData.az)-theta);
 
 dt2 = datetime('2000-01-02 12:00:00');
 T2 = juliandate(dt2); % Julianisches Datum  ET
-NPoints = 5001;
 T_vector=linspace(T1,T2,NPoints);
 
 aPn  = 25000;
@@ -93,12 +92,12 @@ lon2(:) = wrapTo360(rad2deg(SatData.az)-theta);
 
 dt2 = datetime('2000-01-01 04:00:00');
 T2 = juliandate(dt2); % Julianisches Datum  ET
-NPoints = 1001;
+NPoints = 5001;
 T_vector=linspace(T1,T2,NPoints);
 
 aPn  = RE+960;
 iPn  = 93;  % in °
-OmegaPn = 130;
+OmegaPn = 0;
 omegaPn = 0;
 ePn     = 0;
 SatPol.BaPa =[aPn, ePn, iPn, 0, OmegaPn, omegaPn];
@@ -116,7 +115,7 @@ figure('name',titlestr);
 gx = geoaxes;
 geoplot(gx, lat1(:),lon1(:),'+',...
         'MarkerSize',1,'Color', Colors(2,:),'LineWidth', 2);
-text(lat1(1)+2,lon1(1)+2,SatHEO.Name,...
+text(lat1(201)+2,lon1(201)+2,SatHEO.Name,...
     'VerticalAlignment','bottom','color',Colors(2,:),'FontSize',14);
 hold on;
 geoplot(gx, lat2(:),lon2(:),'+',...
@@ -125,7 +124,7 @@ text(lat2(1)-25,lon2(1)-20,SatGEO.Name,...
     'VerticalAlignment','bottom','color',Colors(3,:),'FontSize',14);
 geoplot(gx, lat3(:),lon3(:),'+',...
         'MarkerSize',1,'Color', Colors(4,:),'LineWidth', 2);
-text(lat3(1),lon3(1)+2,SatPol.Name,...
+text(-80,lon3(1)+2,SatPol.Name,...
     'VerticalAlignment','bottom','color',Colors(4,:),'FontSize',14);
 
 geolimits([-80 80],[0 +360])
@@ -182,7 +181,7 @@ geoplot(gx, latG3(:),lonG3(:),'+',...
 text(max(latG3),max(lonG3),SatGEO.Name3,...
     'VerticalAlignment','bottom','color',Colors(4,:),'FontSize',14);
 
-geolimits([-45 45],[-120 +120])
+geolimits([-45 45],[-180 +60])
 geobasemap(gx,'bluegreen')
 title(titlestr);
 set(gca,'FontSize',14);

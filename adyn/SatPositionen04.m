@@ -46,6 +46,7 @@ iP     = 51.751;
 OmegaP = 47.685;
 omegaP = 124;
 MP     = wrapTo360(315.75);  
+MP     = wrapTo360(0);  
 TPn  = 2*pi*sqrt(aP^3/GME)/86400;
 SatHEO.BaPa =[aP , eP, iP , MP, OmegaP, omegaP];
 SatHEO.Name = 'ISS';

@@ -27,31 +27,33 @@
 function SatData= SatPQR(T, SatSet, GME) 
   % Zeit  T in Julianischen Datum 
   
-  aPn = SatSet.BaPa(1);
-  ePn = SatSet.BaPa(2);
-  iPn = SatSet.BaPa(3);
-  MPn = SatSet.BaPa(4);  %Mittlere Anomalie zum Startzeitpunkt
-  OmegaPn = SatSet.BaPa(5);
-  omegaPn = SatSet.BaPa(6);
- 
-  nP  = sqrt(GME/aPn^3)*86400;  %Umlaufgeschwindigkeit in 1/s
+  aP = SatSet.BaPa(1);
+  eP = SatSet.BaPa(2);
+  iP = SatSet.BaPa(3);
+  MP = SatSet.BaPa(4);  %Mittlere Anomalie zum Startzeitpunkt
+  OmegaP = SatSet.BaPa(5);
+  omegaP = SatSet.BaPa(6);
+  nP  = sqrt(GME/aP^3)*86400;  %Umlaufgeschwindigkeit in 1/s
 % Mittlere Anomalie
-  M = deg2rad(MPn) + nP*T;
-  % Berechnung der exzentrischen Anomalie
-  Ecc=EAnom(M,ePn);
+  % Berechnung der exzentrischen Anomalie mit Startwert M(1) = MPn
+  for k=1:length(T)
+      M(k) = deg2rad(MP) + nP*(T(k)-T(1));
+      Ecc(k)=EAnom(M(k),eP);
+%       fprintf('\n Ecc(k)     = %12.9f     (Exzentr. Anomalie)', Ecc(k));
+  end
 % Berechnung der Bahndaten
   cosE=cos(Ecc);
   sinE=sin(Ecc);
-  fac=sqrt((1-ePn)*(1+ePn));
+  fac=sqrt((1-eP)*(1+eP));
   % Bahnkoordinaten 
-  dis     = aPn.*(1-ePn*cosE);
-  Vel     = sqrt(GME*aPn)./dis;
-  uvw     = [aPn.*(cosE-ePn);aPn*fac.*sinE;0.*Ecc]; 
-  vel     = Vel.*[sinE;fac.*cosE;0.*Ecc];
-  iPn=deg2rad(iPn);
-  OmegaPn=deg2rad(OmegaPn);
-  omegaPn=deg2rad(omegaPn);
-  M_PQR = PQR(-OmegaPn, -iPn,-omegaPn); 
+  dis     = aP.*(1-eP*cosE);
+  Vel     = sqrt(GME*aP)./dis;
+  uvw     = [aP.*(cosE-eP);aP*fac.*sinE;0.*Ecc]; 
+  vel     = Vel.*[-sinE;fac.*cosE;0.*Ecc];
+  iP=deg2rad(iP);
+  OmegaP=deg2rad(OmegaP);
+  omegaP=deg2rad(omegaP);
+  M_PQR = PQR(-OmegaP, -iP,-omegaP); 
   Sat.xyz = mtimes(M_PQR,uvw);
   Sat.vel = mtimes(M_PQR,vel);
   xP = Sat.xyz(1,:);
