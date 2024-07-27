@@ -60,7 +60,6 @@ JupPos   = JupiterExakt(t1-tauJup,JupData);
 % PlanetPos(3) = SunPos;
 
 PlanetPos(2) = VenPos;
-PlanetPos(3) = VenPos;
 PlanetPos(4) = MarsPos;
 PlanetPos(5) = JupPos;
 

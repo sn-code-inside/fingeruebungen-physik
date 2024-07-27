@@ -2,7 +2,7 @@
 % AlternativeRaketenGl.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel "Astrodynamik" aus
-% "Finger¸bungend der Physik" von Michael Kaschke und Holger Cartarius
+% "Finger√ºbungend der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
@@ -27,11 +27,11 @@ mL   = 100;     % Masse Mensch (Nutzlast)
 mB   = 100;     % Masse Boot (Strukturmasse)
 mK   = 2.5;     % Masse Kokosnuss;
 vK   = 10;      % Wurfgeschwindigkeit
-Nmax = 100;     % Zahl der Kokosn¸sse;
+Nmax = 100;     % Zahl der Kokosn√ºsse;
 mT0  = Nmax*mK; % Gesamttreibstoffmasse
 
 
-% Zeigt Ann‰herung an die Log-Funktionsberechnung
+% Zeigt Ann√§herung an die Log-Funktionsberechnung
 % mK fest, "Treibstoffmenge" mT = N*mK variiert
 % mT0 2.5 ... 250 kg
 
@@ -47,7 +47,7 @@ for n=1:Nmax
     Vlog(n) = vK*log(M0/(M0-mT(n)));
 end
 
-% Zeigt diskrete Ann‰herung an die Raketengleichung 
+% Zeigt diskrete Ann√§herung an die Raketengleichung 
 % mT0 fest, "Treibstoffmenge" pro "Zeitinterval" mT = MT0/N variiert
 % mT 2.5 ... 250 kg
 
@@ -66,7 +66,7 @@ end
 
 
 
-% Zeigt Ann‰herung an die Log-Funktionsberechnung
+% Zeigt Ann√§herung an die Log-Funktionsberechnung
 % mK fest, "Treibstoffmenge" mT = N*mK variiert
 figure()
 subplot(1,2,1)

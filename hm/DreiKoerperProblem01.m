@@ -1,14 +1,16 @@
 %%-------------------------------------------------------------------------
 % DreiKoerproblem01.m
 % -------------------------------------------------------------------------
-% MATLAB-Programm zum Kapitel "Astrodynamik" aus
+% MATLAB-Programm zum Kapitel "Himmelsmechanik" aus
 % "Fingerübungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
 % -------------------------------------------------------------------------
-% Bewegung von drei Körpern, mit Anfansgbedingung auf 
-% einem gleichseitigen Dreieck. 
+%
+% Bewegung von drei Körpern, mit Anfansgbedingung die zu einer Bewegung auf
+% einer achtförmigen Kurve führen
+% 
 % -------------------------------------------------------------------------
 
 %% Initialisierung
@@ -22,233 +24,155 @@ Style = ["-", "-.", ":", "--", ":"];
 
 % Parameter
 
-RE  = 6371;         % in km
-
 day  = 24 * 60 * 60; % Tag in s
 year = 365.25 * day; % Jahr in s
 AE   = 1.495978707e11;  % AE in km
-G    = 6.6743e-11;      % G in m³ / (kg * s²)
+G    = 6.6743e-11;      % G in mÂ³ / (kg * sÂ²)
 m0   = 2e30;            % Massne in kg
 
 % Simulationszeit und Zeitschrittweite [in s].
-t_end = 50 * year;
+tend  = 3 * year;
 dt    = 2 * day;
 
+epsilon = 1.0;  %stabile Lösung
+epsilon = 1.01; %quasistabile Lösung
+epsilon = 1.2;  %chaotische Lösung
 
-d = 1 * AE;     % Abstand des Körpers vom Schwerpunkt.
-v0 = sqrt(G * m0 / d / sqrt(3)); %Geschwindigkeit von m0 (Betrag).
+X0    = 1 * AE;     % Abstand des Körpers vom Schwerpunkt.
+V0    = epsilon*1.27 * sqrt(G * m0 / X0);  %Geschwindigkeit von m0 (Betrag).
+alpha = deg2rad(56.9);
 
 %  Anfangspositionen und -geschwindigkeitender Körper
-Alpha = [0, 120, 240]+90;
-vecr0 = d .* [cosd(Alpha); sind(Alpha)];
-vecv0 = v0.* [-sind(Alpha); cosd(Alpha)];
+NK = 3;
+x0 = [-X0, 0, X0];
+y0 = [0, 0, 0];
+vx0 = 1.0*V0*cos(alpha)*[-1/2, 1, -1/2];
+vy0 = V0*sin(alpha)*[-1/2, 1, -1/2];
+d = 1 * AE;     % Abstand des KÃ¶rpers vom Schwerpunkt.
+v0 = sqrt(G * m0 / d / sqrt(3)); %Geschwindigkeit von m0 (Betrag).
 
+vecr0 = [x0;y0];
+vecv0 = [vx0; vy0];
 figure()
 hold on
-for k=1:length(Alpha)
-  plot(vecr0(1,k)/AE,vecr0(2,k)/AE,'o','markersize',8,'linewidth',8,...
-       'color',Colors(k,:))
+
+for k=1:NK
+  hp(k)=plot(vecr0(1,k)/AE,vecr0(2,k)/AE,'o','markersize',8,'linewidth',8,...
+       'color',Colors(k,:));
 end
 axis equal
 axis([-2 2 -2 2]*3/4)
 hold on
-for k=1:length(Alpha)-1
-    line([vecr0(1,1) vecr0(1,k+1)],[vecr0(2,1) vecr0(2,k+1)],'color','r')
+for k=1:NK
+    line([vecr0(1,1) vecr0(1,k)]/AE,[vecr0(2,1) vecr0(2,k)]/AE,...
+        'color','k')
 end
-line([vecr0(1,3) vecr0(1,2)],[vecr0(2,3) vecr0(2,2)],'color','r')
 grid on
+text(-1,1,strcat('\epsilon =',num2str(epsilon,'%4.2f')));
+for k =1:NK
+   AB(2*k-1)   = vecr0(1,k);
+   AB(2*k)     = vecr0(2,k);
+   AB(2*k+5)   = vecv0(1,k);
+   AB(2*k+6)   = vecv0(2,k);
+end
 
-% %def dgl(t, u):
-%     """Berechen Sie die rechte Seite der Differentialgleichung."""
-%     r, v = np.split(u, 2)
-%     r = r.reshape(n_körper, n_dim)
-%     a = np.zeros((n_körper, n_dim))
-%     für i im Bereich(n_körper):
-%         für j im Bereich (i):
-%             dr = r[j] - r[i]
-%             gr = G / np.linalg.norm(dr) ** 3 * dr
-%             a[i] += gr * m[j]
-%             a[j] -= gr * m[i]
-%     gibt np.concatenate([v, a.reshape(-1)]) zurück
-% 
-% 
-% # Lege den Zustandsvektor zum Zeitpunkt t=0 fest.
-% u0 = np.verketten((r0.reshape(-1), v0.reshape(-1)))
-% 
-% # Löse die Bewegungsgleichung numerisch.
-% Ergebnis = scipy.integrate.solve_ivp(dgl, [0, t_max], u0, rtol=1e-9,
-%                                    t_eval=np.arange(0, t_max, dt))
-% t = Ergebnis.t
-% r, v = np.split(Ergebnis.y, 2)
-% 
-% # Wandler und V in ein 3-dimensionales Array um:
-% # 1. Index - Himmelskörper
-% # 2. Index - Koordinatenrichtung
-% # 3. Index - Zeitpunkt
-% r = r.reshape(n_körper, n_dim, -1)
-% v = v.reshape(n_körper, n_dim, -1)
-% 
-% # Berechne die verschiedenen Energiebeiträge.
-% E_kin = 1/2 * m @ np.sum(v * v, Achse=1)
-% E_pot = np.Null(t.Größe)
-% für i im Bereich(n_körper):
-%     für j im Bereich (i):
-%         dr = np.linalg.norm(r[i] - r[j], Achse=0)
-%         E_pot -= G * m[i] * m[j] / dr
-% E = E_pot + E_kin
-% dE_rel = (np.max(E) - np.min(E)) / E[0]
-% print(f'Relative Energieänderung: {dE_rel:.2g}'
-% 
-% 
-% # Erzeuge eine Figur und eine Achse für die Animation.
-% fig = plt.figure()
-% ax = fig.add_subplot(1, 1, 1)
-% ax.set_xlabel('$x$ [AE]')
-% ax.set_ylabel('$y$ [AE]')
-% ax.set_xlim(-5, 5)
-% ax.set_ylim(-5, 5)
-% ax.set_aspect('gleich')
-% ax.grid()
-% 
-% # Plotte für jeden Planeten die Bahnkurve.
-% für ort, farbe in zip(r, farben):
-%     ax.plot(ort[0] / AE, ort[1] / AE, '-',
-%             Farbe=Farbe, Linienbreite=0,2)
-% 
-% # Erzeuge für jeden Himmelskörper einen Punktplot in der
-% # entsprechenden Farbe und speichern Sie diese in der Liste.
-% plots_himmelskoerper = []
-% für Farbe in Farben:
-%     plot, = ax.plot([], [], 'o', color=farbe)
-%     plots_himmelskoerper.append(plot)
-% 
-% # Fügen Sie ein Textfeld für die Anzeige der verstrichenen Zeit hinzu.
-% text_zeit = ax.text(-4.5, 4.5, '')
-% 
-% 
-% def Aktualisierung(n):
-%     "Aktualisiere die Grafik zum n-ten Zeitschritt."
-%     für Plot, Ort in zip(plots_himmelskoerper, r):
-%         plot.set_data(ort[:, n].reshape(-1, 1) / AE)
-%     text_zeit.set_text(f'{t[n] / jahr:.2f} Jahre')
-%     return plots_himmelskoerper + [text_zeit]
-% 
-% 
-% # Erzeuge das Animationsobjekt und starte die Animation.
-% ani = mpl.animation.FuncAnimation(Abb., aktualisieren, Frames=t.size,
-%                                   Intervall=30, blit=True)
-% 
-% %% VorwÃ¤rtsrechnung Orbit aus Bahnparametern
-% 
-% % Berechnung mit SSO Parametern
-% eP     = 0.00;
-% OmegaP = deg2rad(100.1213);
-% omegaP = deg2rad(0);
-% MP     = deg2rad(wrapTo360(0));  
-% K      =  3;  %Zyklus in Tage
-% N      = 43;  %Zyklus in Umrundungen der Erde
-% D_La1  = -360*K/N;  %geforderte Verschiebung aufsteigender Knoten
-% %Berechnet aus Bedingung N*(OmegaDot - ThetaDot)+TP = -K*360°
-% aP     = 7153.123;   %in km
-% J2     = 1.083e-3;  
-% iP     = deg2rad(98.498);
-% NPoints= 201;
-% 
-% %rate change of Omega per second 
-% OmegaDot  = -1.5*sqrt(GME/aP^3)*J2*cos(iP)*RE^2/aP^2;  % per second
-% OmegaDotd = OmegaDot*24*60*60;   %rate change of Omega per day 
-% 
-% %rate change of omega per day 
-% omegaDot  = -0.75*sqrt(GME/aP^3)*(1-5*(cos(iP))^2)*J2*RE^2/aP^2; % per second 
-% omegaDotd = omegaDot*24*60*60;   %rate change of Omega per day 
-% 
-% %rate change of mean anomaly
-% nDot  = -0.75*sqrt(GME/aP^3)*(1-3*(cos(iP))^2)*J2*RE^2/aP^2; % per second
-% nDotd = nDot*24*60*60;    %rate change of Omega per day
-% n0d   = sqrt(GME/aP^3)*86400;
-% 
-% %rate change of Theta
-% ThetaDotd = 360.9856473*2*pi/360; %rad per day
-% ThetaDot  = ThetaDotd/24/60/60;   %rad per second
-% MP        = wrapTo360(0);  % mean anomaly 
-% 
-% %Umlaufzeiten
-% TPn    = 2*pi*sqrt(aP^3/GME)/86400;  %Umlaufzeit Kepler-Bahn in d
-% TPkor  = 2*pi/(n0d+nDotd+omegaDotd); %geforderte Umlaufzeit für SSO
-% 
-% %Check for closure after N=3 and K=43
-% % x1 = N*(OmegaDotd-ThetaDotd)*2*pi/(n0d+nDotd+omegaDotd);
-% % x2 = -K*2*pi;
-% % Parameterübergabe
-% 
-% TSpan = 6/24; %Zeitspanne in h
-% 
-% % Berechnung Bahndaten zeitpunkt T1
-% dt1 = datetime('2020-01-01 00:00:00');
-% T1  = juliandate(dt1) - TSpan/24; % Julianisches Datum  ET
-% T1E = T1 + TSpan/24 + TPkor;
-% T_vector1 = linspace(T1,T1E,NPoints);  %in julianischen Tagen udn Bruchteilen
-% SatSSO.BaPa =[aP , eP, iP , MP, OmegaP, omegaP];
-% SatSSO.Name = 'SSO';
-% SatData1  = SatPQR_perturbed_orbit(T_vector1, SatSSO, GME, OmegaDotd, omegaDotd, nDotd);
-% 
-% % Berechnung Bahndaten zeitpunkt T2
-% T2  = T1 + 42*TPkor  - TSpan/24;  % Julianisches Datum  ET
-% T2E = T1 + 43*TPkor  + TSpan/24;
-% MP = MP + (n0d + nDotd + omegaDotd)*(T2-T1) ;
-% OmegaP = OmegaP+OmegaDotd*(T2-T1);
-% T_vector2 = linspace(T2,T2E,NPoints);  %in julianischen Tagen udn Bruchteilen
-% SatSSO.BaPa =[aP , eP, iP , MP, OmegaP, omegaP];
-% SatData2  = SatPQR_perturbed_orbit(T_vector2, SatSSO, GME, OmegaDotd, omegaDotd, nDotd);
-% 
-% % Umrechnung in geographische Breite und Länge
-% lat1(:) = rad2deg(SatData1.el);
-% theta1  = GMSTsat(T_vector1);
-% lon1(:) = wrapTo180(rad2deg(SatData1.az)-theta1);
-% lat2(:) = rad2deg(SatData2.el);
-% theta2  = GMSTsat(T_vector2);
-% lon2(:) = wrapTo180(rad2deg(SatData2.az)-theta2);
-% 
-% 
-% %% Graphik Ground Track
-% 
-% titlestr = strcat(SatSSO.Name,' Ground Track');
-% figure('name',titlestr);
-% gx = geoaxes;
-% hp(1)=geoplot(gx, lat1(:),lon1(:),'d',...
-%         'MarkerSize',2,'Color', Colors(2,:),'LineWidth', 3);
-% hold on
-% hp(2)=geoplot(gx, lat2(:),lon2(:),'+',...
-%         'MarkerSize',2,'Color', Colors(4,:),'LineWidth', 2);
-% geobasemap(gx,'bluegreen')
-% geolimits('manual') 
-% geolimits([-90 90],[-180 +180])
-% hp1 = title(titlestr,'FontSize',12);
-% legend(hp,'1. Orbit', '42. und 43. Orbit', 'location', 'northeast')
-% % legend box off
-% set(hp1,'FontSize',14,'FontWeight','normal'); 
-% set(gca,'FontSize',14);
-% 
-% %% PrintOut
-% 
-% 
-% fprintf('\n');
-% fprintf('Bahnparameter fÃ¼r Bahnberechnung nach Kepler\n');
-% fprintf('\n Zeit  = %s', dt1);
-% fprintf('\n');
-% fprintf('\n a     = %8.2f km  (GroÃe Halbachse)', aP);
-% fprintf('\n h     = %8.2f km  (mittlere Höhe)', aP-RE);
-% fprintf('\n e     = %8.5f     (ExzentrizitÃ¤t)', eP);
-% fprintf('\n i     = %8.2f     (Inklination)', iP);
-% fprintf('\n Omega = %8.2f     (Rektasz. aufst. Knoten)', rad2deg(OmegaP));
-% fprintf('\n omega = %8.2f     (Argument PerigÃ¤um)', rad2deg(omegaP));
-% fprintf('\n M     = %8.2f     (Mittlere Anomalie)', rad2deg(MP));
-% fprintf('\n TPn   = %8.2f min (Umlaufzeit Kepler-Bahn)', TPn*24*60);
-% fprintf('\n TPkor = %8.2f min (Umlaufzeit Sonnensynchrone Bahn)', TPkor*24*60);
-% fprintf('\n');
-% fprintf('\n D_La1 =%+8.2f min (Verschiebung aufsteigender Knoten gefordert)', D_La1);
-% fprintf('\n');
-% fprintf('\n');
+P1.G   = G;
+P1.m0  = m0;
+P1.NK  = NK;
+opts = odeset('AbsTol',1.e-8,'RelTol',1.e-9);
+[tA,YA]=ode45(@(t,YA, P1)DGL_3BodySystem(t,YA,P1),[0 tend],AB,opts,P1);
+
+for k=1:NK
+    plot(YA(:,2*k-1)/AE,YA(:,2*k)/AE,'Color',Colors(k,:))
+end
+
+% Simulation
+% for n=1:20:length(tA)
+% for k=1:NK
+%     plot(YA(n,2*k-1)/AE,YA(n,2*k)/AE,'o','markersize',3,'linewidth',3,...
+%        'color',Colors(k,:))
+%     pause(0.01)
+% end
+% end
+
+legend(hp,'m_1', 'm_2', 'm_3' ,'location', 'northeast')
+legend box off
+set(gca,'FontSize',14);
+xlabel('x in AE')
+ylabel('y in AE')
+set(gca,'FontSize',14);
+
+
+x(:,1) = YA(:,1);
+y(:,1) = YA(:,2);
+x(:,2) = YA(:,3);
+y(:,2) = YA(:,4);
+x(:,3) = YA(:,5);
+y(:,3) = YA(:,6);
+vx(:,1) = YA(:,7);
+vy(:,1) = YA(:,8);
+vx(:,2) = YA(:,9);
+vy(:,2) = YA(:,10);
+vx(:,3) = YA(:,11);
+vy(:,3) = YA(:,12);
+dr12(:) = sqrt((x(:,1)- x(:,2)).^2 + (y(:,1)- y(:,2)).^2);
+dr13(:) = sqrt((x(:,1)- x(:,3)).^2 + (y(:,1)- y(:,3)).^2);
+dr23(:) = sqrt((x(:,2)- x(:,3)).^2 + (y(:,2)- y(:,3)).^2);
+
+% Berechne die verschiedenen Energiebeiträge.
+Ekin(:,1) = vx(:,1).^2+ vy(:,1).^2;
+Ekin(:,2) = vx(:,2).^2+ vy(:,2).^2;
+Ekin(:,3) = vx(:,3).^2+ vy(:,3).^2;
+Ekinges(:) = m0*(Ekin(:,1)+Ekin(:,2)+Ekin(:,3))/2;
+ 
+Epot(:) = -G * m0^2 *(1./dr12(:) +1./dr13(:) + 1./dr23(:));
+TJ =1e12;
+tA = tA/86400;
+figure('Name','Energiebeiträge')
+hp2(1)=plot(tA, Ekinges/TJ,'linewidth',2);
+hold on
+hp2(2)=plot(tA, Epot/TJ,'linewidth',2);
+hp2(3)=plot(tA, (Ekinges+Epot)/TJ,'linewidth',2);
+grid on
+legend(hp2,'T_{kin}', 'U_{pot}', 'E_{ges}', 'location', 'west')
+legend box off
+ylabel('E in TJ')
+xlabel('t in Tagen')
+set(gca,'FontSize',14);
+
+
+
+%%  Funktion
+% DGL
+function dY = DGL_3BodySystem(~, Y, P1)
+    G   = P1.G;
+    m0  = P1.m0;
+    GM2 = G*m0;
+    NK  = P1.NK;
+    for k=1:NK
+      vecr(:,k) = [Y(2*k-1) Y(2*k)];
+      vecv(:,k) = [Y(2*k+5) Y(2*k+6)];
+      x(k)      = vecr(1,k);
+      y(k)      = vecr(2,k);
+    end  
+    dr12 = norm(vecr(:,1)-vecr(:,2));
+    dr13 = norm(vecr(:,1)-vecr(:,3));
+    dr23 = norm(vecr(:,2)-vecr(:,3));
+    dY =  [Y(7);...
+          Y(8);...
+          Y(9);...
+          Y(10);...
+          Y(11);...
+          Y(12);...
+          -GM2*(x(1)-x(2))/dr12^3-GM2*(x(1)-x(3))/dr13^3;...
+          -GM2*(y(1)-y(2))/dr12^3-GM2*(y(1)-y(3))/dr13^3;...
+          -GM2*(x(2)-x(1))/dr12^3-GM2*(x(2)-x(3))/dr23^3;...
+          -GM2*(y(2)-y(1))/dr12^3-GM2*(y(2)-y(3))/dr23^3;...        
+          -GM2*(x(3)-x(1))/dr13^3-GM2*(x(3)-x(2))/dr23^3;...        
+          -GM2*(y(3)-y(1))/dr13^3-GM2*(y(3)-y(2))/dr23^3       
+         ];
+end
+
 
 %% Ende Programm
 

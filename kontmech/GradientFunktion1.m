@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------------
 % GradientFunktion1.m
 % -------------------------------------------------------------------------
-% MATLAB-Programm zum Kapitel "Physik der Bewegung" aus
+% MATLAB-Programm zum Kapitel "Physik des Kontinuums" aus
 % "FingerÃ¼bungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
@@ -47,7 +47,7 @@ dv=0.1;
 dx=dv; dy=dv; dz=dv; 
 
 figure('name','Gradient der Funktion Phi (numerisch)')
-m=round(N/2)+5; zm=-zmax+(m-1)*zs;  % z-Wert für Plot von Phi(x,y,z)
+m=round(N/2)+5; zm=-zmax+(m-1)*zs;  % z-Wert fÃ¼r Plot von Phi(x,y,z)
 [x,y,z]=meshgrid(-xmax:xs:xmax,-ymax:ys:ymax,-zmax:zs:zmax);
 rexp = exp(-x.^2-y.^2-z.^2);
 dfx = 10*y.*rexp-20*x.^2.*y.*rexp;
@@ -68,9 +68,9 @@ axis equal
 
 
 
-%% Numerische Berechnungen für Funktion 1
+%% Numerische Berechnungen fÃ¼r Funktion 1
 
-m=round(N/2)+5; zm=-zmax+(m-1)*zs;         % z-Wert für Plot von Phi(x,y,z)
+m=round(N/2)+5; zm=-zmax+(m-1)*zs;         % z-Wert fÃ¼r Plot von Phi(x,y,z)
 [x,y,z]=meshgrid(-xmax:xs:xmax,-ymax:ys:ymax,-zmax:zs:zmax);
 
 Phi=10*x.*y.*exp(-(x.^2+y.^2+z.^2));       % Phi(x,y,z)

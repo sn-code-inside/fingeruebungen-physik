@@ -53,7 +53,7 @@ xlim([-1.35 1.15]);
 axis square;
 title('\it r/a \rm Verhältnis der Planetenbahnen');
 grid on;
-legend(BaPa.Name(:),'location','bestoutside');
+legend(BaPa.Name(1:9),'location','bestoutside');
 legend('boxoff');
 axis equal;
 

@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------------
 % GradientFunktion2.m
 % -------------------------------------------------------------------------
-% MATLAB-Programm zum Kapitel "Physik der Bewegung" aus
+% MATLAB-Programm zum Kapitel "Physik des Kontinuums" aus
 % "FingerÃ¼bungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
@@ -53,7 +53,7 @@ C     = -2;
 alpha = 0.5;
 
 figure('name','Gradient der Funktion Phi (analytisch)')
-m=round(N/2)+5; zm=-zmax+(m-1)*zs;  % z-Wert für Plot von Phi(x,y,z)
+m=round(N/2)+5; zm=-zmax+(m-1)*zs;  % z-Wert fÃ¼r Plot von Phi(x,y,z)
 [x,y,z]=meshgrid(-xmax:xs:xmax,-ymax:ys:ymax,-zmax:zs:zmax);
 
 r = sqrt(x.^2+y.^2+z.^2);
@@ -79,9 +79,9 @@ set(h,'FontWeight','normal','FontSize',12);
 axis equal
 
 
-%% Numerische Berechnungen für Funktion 2 Yukawa-Ptential
+%% Numerische Berechnungen fÃ¼r Funktion 2 Yukawa-Ptential
 
-m=round(N/2)+5; zm=-zmax+(m-1)*zs;         % z-Wert für Plot von Phi(x,y,z)
+m=round(N/2)+5; zm=-zmax+(m-1)*zs;         % z-Wert fÃ¼r Plot von Phi(x,y,z)
 [x,y,z]=meshgrid(-xmax:xs:xmax,-ymax:ys:ymax,-zmax:zs:zmax);
 
 [dfx,dfy,dfz] = gradient(PhiFunc,dx,dy,dz);% Gradient von Phi(x,y,z)

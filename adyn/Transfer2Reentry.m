@@ -83,13 +83,23 @@ if x==1
     yTr   = p*sinu./(1+exz*cos(u+1*pi))/RE;
     xTrRe = p*cos(thetRe)./(1+exz*cos(thetRe-1*pi))/RE;
     yTrRe = p*sin(thetRe)./(1+exz*cos(thetRe-1*pi))/RE;
+    for k=1:length(yTr)
+        if (norm([xTr(k); yTr(k)]) > 1) && (u(k) < pi)
+            xTr1(k)= xTr(k);
+            yTr1(k)= yTr(k);
+        else
+            xTr1(k)= NaN;
+            yTr1(k)= NaN;            
+        end   
+    end
     maxAx = 1.1*rA/RE;          
     %----------------------------------------------------------------------
     figure(1)
     hold on
     hp(1)=plot(xA,yA,'color',Colors(2,:),'Linewidth',1,'LineStyle',Style(1));
     hp(2)=plot(xE,yE,'color',Colors(3,:),'Linewidth',1,'LineStyle',Style(1));
-    hp(3)=plot(xTr,yTr,'color',Colors(4,:),'Linewidth',2,'LineStyle',Style(1));
+    plot(xTr,yTr,'color',Colors(4,:),'Linewidth',2,'LineStyle',Style(3));
+    hp(3)=plot(xTr1,yTr1,'color',Colors(4,:),'Linewidth',2,'LineStyle',Style(1));
     hp(4)=plot(xRe,yRe,'color',Colors(8,:),'Linewidth',1,'LineStyle',Style(3));
     line([0 rA/RE],[0 0]);  
     line([0 xTrRe],[0 yTrRe]);

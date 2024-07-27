@@ -1,13 +1,13 @@
 % -------------------------------------------------------------------------
 % StokesFormel01.m
 % -------------------------------------------------------------------------
-% MATLAB-Programm zum Kapitel "Physik der Bewegung" aus
-% "Fingerübungen der Physik" von Michael Kaschke und Holger 
+% MATLAB-Programm zum Kapitel "Physik des Kontinuums" aus
+% "Fingerübungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
-% Alle Rechte bei den AutorenCartarius
+% Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
 % -------------------------------------------------------------------------
-% Programm berechnet das Str�mungsprofil f�r die Stokes-Reibung
+% Programm berechnet das Strömungsprofil für die Stokes-Reibung
 % -------------------------------------------------------------------------
 clc
 clear all
@@ -24,7 +24,7 @@ y  = linspace(-4,4,81);
 [z,y] = meshgrid(z,y);
 
 %Berechnung Geschwindigkeitsfeld
-theta = atan2(y,z);  % Winkel zwischen z-Richtung Geschwindkeit und 
+theta = atan2(y,z);  % Winkel zwischen z-Richtung Geschwindigkeit und 
                      % Positionsvektor
 
 r = sqrt(z.^2+y.^2); % Abstand vom Zentrum der Kugel

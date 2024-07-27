@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------------
 % GravityAssistSimulation.m
 % -------------------------------------------------------------------------
-% MATLAB-Programm zum Kapitel "Physik der Bewegung" aus
+% MATLAB-Programm zum Kapitel "Astrodynamik" aus
 % "Fingerübungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
@@ -10,7 +10,7 @@
 % Programm simuliert die Streuung einer Raumsonde an einem Planeten
 % im heliozentrischen KOS
 % 
-% Beispiel Jupiter,  andere Planeten ausw�hlbar
+% Beispiel Jupiter,  andere Planeten auswählbar
 % -------------------------------------------------------------------------
 clc
 clear all
@@ -23,7 +23,7 @@ Marker = ['o','d','o','s','+'];
 
 %% Parameter
 % Variablen, Konstanten, Parameter, hier alles in m, kg, s
-% Parameter hier lles in m, kg, s
+% Parameter hier alles in m, kg, s
 G   = 6.671e-11;      % G in in m^3/s^2/kg
 AE  = 149597870700;   % in m
 AEk = 149597870.700;  % in km
@@ -64,7 +64,7 @@ dx0   = v1*cos(gamma1);
 dy0   = v1*sin(gamma1);
 AB = [x0 dx0 y0 dy0, x0J dx0J y0J dy0J];       % AB Sonde & Jupiter
 
-tv    = linspace(0,1.5*RSOI/v1,10001);         % Gesch�tze Dauer Vorbeiflug
+tv    = linspace(0,1.5*RSOI/v1,10001);         % Geschätze Dauer Vorbeiflug
 
 %% Berechnung 
 % opt = odeset('AbsTol',1.e-10,'RelTol',1.e-8);
@@ -155,7 +155,7 @@ end
 
 function dY = dgl_GravityAssist(t, Y, P1)
     % Y(1,8)=xS,vSx,yS,vSy, xJ, vxJ, yJ, vyJ
-    % Es muss ein Spaltenvektor zurückgegeben werden 
+    % Es muss ein Spaltenvektor zurÃ¼ckgegeben werden 
     dY     =  zeros(8,1); 
     omegJ = P1.omegJ;
     aJ    = P1.aJ;

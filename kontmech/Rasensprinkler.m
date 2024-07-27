@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------------
 % Rasensprinkler.m
 % -------------------------------------------------------------------------
-% MATLAB-Programm zum Kapitel "Physik der Bewegung" aus
+% MATLAB-Programm zum Kapitel "Physik des Kontinuums" aus
 % "FingerÃ¼bungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
@@ -18,7 +18,7 @@ Colors = GetColorLines;
 
 dD  = 0.004; AD= pi/4*dD^2;      % Austrittsquerschnitt in m^2 
 din = 0.0125; Ain = pi/4*din^2;  % Eintrittsquerschnitt in m^2 
-R   = 0.30;               % Halbe Armlänge in m
+R   = 0.30;               % Halbe ArmlÃ¤nge in m
 Q   = 0.1e-3;             % Fluss in m^3/s  (1/10 l pro s)
 phi = deg2rad(10);        % Winkel zur Tangente
 rho = 1e3;                % Dichte in kg/m^3
@@ -52,7 +52,7 @@ ylabel('Umdrehung in 1/min','FontSize',14)
 grid on
 set(gca,'FontSize',14);
 streta =strcat(num2str(eta,3),' Nms )');
-str = "Rotation als Funktion Durchfluss Q und Düsendurchmesser d_D  (Reibung \eta = ";
+str = "Rotation als Funktion Durchfluss Q und DÃ¼sendurchmesser d_D  (Reibung \eta = ";
 str = strcat(str,streta);
 h2 = title(str);
 legend(lgdstr, 'location','northwest');
@@ -77,7 +77,7 @@ for k=1:length(etavec)
     lgdstr(k,:) = strcat(string(num2str(etavec(k)*60,2)),' Nms');
 end
 xlabel('Fluss Q in l/s ','FontSize',14)
-ylabel('Überdruck p/p_L','FontSize',14)
+ylabel('Ãœberdruck p/p_L','FontSize',14)
 grid on
 set(gca,'FontSize',14);
 strD  = strcat(num2str(dD*1000,2),' mm');

@@ -20,7 +20,7 @@ Colors = GetColorLines;
 Style = ["-", "-.", ":", "--", ":"];
 
 %% Parameter
-L = 500;                              % Länge der Wasserlinie
+L = 500;                              % Länge der Wasserlinie in m
 
 NG = 201;                             % Gitterpunkte im Ort
 dx = L/(NG-1);                        % Abstand zweier Gitterpunkte
@@ -34,7 +34,7 @@ t(:)= (0:NT-1)*dt;                    % Zeitgitter
 g = 9.91;                             % Schwerebeschleunigung in m/s^2
 s = 0.07495;                          % Oberflächenspannung Wasser, 5°C
                                       % in N/m
-rho = 1000.;                          % Dichte Wasser, 5°C in kg/m^3
+rho = 1020.;                          % Dichte von Salzwasser
 
 %% Bereite Gitter vor
 y = zeros(NT,NG);
@@ -75,8 +75,8 @@ for i = 1:6
   grid on;
   axis([min(x) max(x) -12 6]);
   xlabel('{\itx} in m');
-  ylabel('{\ity}({\itt}) in m');
-  titletext = sprintf('t = %.1f s',t(k(i)));
+  ylabel('{\it\psi}({\itt}) in m');
+  titletext = sprintf('{\\itt} = %.1f s',t(k(i)));
   texto = text(L/4,4,titletext);
   set(texto,'FontSize',16,'FontWeight','normal','FontName','Times');
   set(gca,'FontSize',16,'FontName','Times');

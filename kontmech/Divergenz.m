@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------------
 % Divergenz.m
 % -------------------------------------------------------------------------
-% MATLAB-Programm zum Kapitel "Physik der Bewegung" aus
+% MATLAB-Programm zum Kapitel "Physik des Kontinuums" aus
 % "Fingerübungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
@@ -29,7 +29,7 @@ xmax=vmax; ymax=vmax; zmax=vmax; % x,y,z Limits
 xmin=vmin; ymin=vmin; zmin=vmin;
 vs=0.4; xs=vs; ys=vs; zs=vs; % Inkrement
 N=(vmax-vmin)/vs; % Punktezahl NxNxN
-m=round(N/2+1); zm=zmin+(m-1)*zs; % z Wert f�r Plotting
+m=round(N/2+1); zm=zmin+(m-1)*zs; % z Wert für Plotting
 [x,y,z]=meshgrid(xmin:xs:xmax,ymin:ys:ymax,zmin:zs:zmax);
 % Vektorfunktion ist f = fx i + fy j + fz k. 
 % Verschiedene Funktionen zur Auswahl 

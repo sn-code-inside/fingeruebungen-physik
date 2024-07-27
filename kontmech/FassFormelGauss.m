@@ -1,14 +1,14 @@
 % -------------------------------------------------------------------------
 % FassFormelGauss.m
 % -------------------------------------------------------------------------
-% MATLAB-Programm zum Kapitel "Physik der Bewegung" aus
+% MATLAB-Programm zum Kapitel "Physik des Kontinuums" aus
 % "FingerÃ¼bungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
 % -------------------------------------------------------------------------
-% Programm berechnet Volumen von Rotationskörpern
-% über Gaussschen Integralsatz
+% Programm berechnet Volumen von RotationskÃ¶rpern
+% Ã¼ber Gaussschen Integralsatz
 % -------------------------------------------------------------------------
 clc
 clear all

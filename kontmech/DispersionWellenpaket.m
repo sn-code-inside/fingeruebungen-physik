@@ -7,7 +7,7 @@
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
 % -------------------------------------------------------------------------
-% Programm zeigt Dispersion eines Gauß-förmigen Wellenpakets.
+% Programm zeigt Dispersion eines GauÃŸ-fÃ¶rmigen Wellenpakets.
 % 
 % -------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ Style = ["-", "-.", ":", "--", ":"];
 
 %% Parameter
 
-%Parameterspace für Raumkoordinate x
+%Parameterspace fÃ¼r Raumkoordinate x
 xend   = 4000;
 xsteps = 40000;
 x      = linspace(-xend/10,xend*9/10,xsteps);
@@ -29,7 +29,7 @@ deltax = xend/xsteps;
 x0     = 100;
 b      = 15;                          % Anfangsbreite in m
 
-%Parameterspace für Zeitkoordinate t
+%Parameterspace fÃ¼r Zeitkoordinate t
 tend   = 200;
 tsteps = 40000;
 t = linspace(-tend,tend,tsteps);
@@ -38,7 +38,7 @@ t0     = 0;                             % Anfangspulsbreite
 
 vph0    = 10.0;                         % mittlere Phasengeschwindigkeit m/s
 vd      = -5;                           % Dispersionsparameter m/s
-lambda0 = 4.0;                          % Wellenlänge 1 in m
+lambda0 = 4.0;                          % WellenlÃ¤nge 1 in m
 k0      = 2*pi/lambda0 ;                % Wellenzahl  in m/s
 omega0  = k0*vph0;
 

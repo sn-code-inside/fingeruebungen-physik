@@ -22,16 +22,16 @@ Style = ["-", "-.", ":", "--", ":"];
 
 %% Parameter
 %normal Dispersion  (Auswahl)
-lambda1  = 0.95;                        % Wellenl‰nge 1 in m
-lambda2  = 1.05;                        % Wellenl‰nge 2 in m
-lambda   = (lambda1+lambda2)/2;         % mittlere Wellenl‰nge in m
+lambda1  = 0.95;                        % Wellenl√§nge 1 in m
+lambda2  = 1.05;                        % Wellenl√§nge 2 in m
+lambda   = (lambda1+lambda2)/2;         % mittlere Wellenl√§nge in m
 vph1     = 0.975;                       % Phasengeschwindigkeit 1 in m/s
 vph2     = 1.025;                       % Phasengeschwindigkeit 1 in m/s
 
 %anormale Dispersion (Auswahl)
-% lambda1  = 0.95;                        % Wellenl‰nge 1 in m
-% lambda2  = 1.05;                        % Wellenl‰nge 2 in m
-% lambda   = (lambda1+lambda2)/2;         % mittlere Wellenl‰nge in m
+% lambda1  = 0.95;                        % Wellenl√§nge 1 in m
+% lambda2  = 1.05;                        % Wellenl√§nge 2 in m
+% lambda   = (lambda1+lambda2)/2;         % mittlere Wellenl√§nge in m
 % vph1     = 1.025;                       % Phasengeschwindigkeit 1 in m/s
 % vph2     = 0.975;                       % Phasengeschwindigkeit 1 in m/s
 
@@ -41,11 +41,11 @@ k2       = 2*pi/lambda2;                % Wellenzahl 2 in m/s
 omega1   = vph1*k1;                       % Kreisfrequenz 1 in 1/s
 omega2   = vph2*k2;                       % Kreisfrequenz 2 in 1/s
 
-vph      = (vph1+vph2)/2;               % N‰herung mittl. Phasengeschwindigkeit
+vph      = (vph1+vph2)/2;               % N√§herung mittl. Phasengeschwindigkeit
 vgr      = (omega1-omega2)/(k1-k2); 
-% N‰herung Gruppengeschwindigkeit
+% N√§herung Gruppengeschwindigkeit
 vgr2     = vph-lambda*(vph1-vph2)/(lambda1-lambda2); 
-% N‰herung GruppenPhasengeschwindigkeit
+% N√§herung GruppenPhasengeschwindigkeit
 
 xend = 20;
 xsteps =400;
@@ -67,7 +67,7 @@ ymax  = 2.25;
 % Einzelwellen
 psi1 = zeros(length(x),length(t));
 psi2 = zeros(length(x),length(t));
-% Mittlere Ausbreitung (Tr‰gerwelle)
+% Mittlere Ausbreitung (Tr√§gerwelle)
 psi  = zeros(length(x),length(t));
 for k=1:length(t)
   for m=1:length(x)
@@ -155,13 +155,13 @@ psi_wp  = zeros(length(x),length(t));
 vph0    = 1;
 vd      = 0;                            % Dispersionsparameter = 0 m/s
 vd      = -0.4;                         % Dispersionsparameter = -0.7 m/s
-lambda0 = 1.0;                          % Wellenl‰nge 1 in m
+lambda0 = 1.0;                          % Wellenl√§nge 1 in m
 kw0     = 2*pi/lambda0 ;                % Wellenzahl  in m/s
 omega0  = vph0*kw0;                     % Kreisfrequenz 1 in 1/s
 Nmax    = 101;
-% Mittlere Ausbreitung (Tr‰gerwelle)
+% Mittlere Ausbreitung (Tr√§gerwelle)
 for n=1:Nmax
-    lambda(n) = lambda0 + 0.2*(n-Nmax)/(Nmax-1); % Wellenl‰nge
+    lambda(n) = lambda0 + 0.2*(n-Nmax)/(Nmax-1); % Wellenl√§nge
     kw(n)     = 2*pi/lambda(n);
     vph(n)    = vph0 + vd*(abs(kw(n))-kw0)/kw0;
     omega(n)  =  vph(n)*kw(n);

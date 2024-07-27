@@ -84,27 +84,30 @@ end
 
 figure('Name','Nutzlastverhältnis');
 subplot(1,2,1)  % Plot Nutzlastverhältnis über Antriebsvermögen
-title('Ariane 1');
 for k=1:length(sigmaA)
-    semilogy(Delta_vgesA(k,:)/1000, mLA/m0A(1) ,'Color', Colors(k,:),'LineWidth',2);
+    p(k)=semilogy(Delta_vgesA(k,:)/1000, mLA/m0A(1) ,'Color', Colors(k,:),'LineWidth',2);
     hold on
     lgdstrA(k,:) = sprintf('Stufe %s',num2str(k,2));
 end
+line 
 grid on;
 xlim([0, 25]);
 ylim([1e-3, 1]);
+line([7.73 7.73],[0.001 1],'Color', Colors(8,:),...
+    'LineStyle',Style(3),'LineWidth',1);
 ylabel('Nutzlastverhältnis','FontSize',14)
 xlabel('Antriebsvermögen Delta v in km/s','FontSize',14)
-h2 = legend(lgdstrA,'location','northeast'); 
+h2 = legend(p, lgdstrA,'location','northeast'); 
 set(h2,'FontSize',14,'FontWeight','normal'); 
+ht = title('Ariane 1'); 
+set(ht,'FontSize',14,'FontWeight','normal'); 
 legend box off;
 set(gca,'FontSize',16);
 
 
 subplot(1,2,2)  % Plot Nutzlastverhältnis über Antriebsvermögen
-title('Saturn V');
 for k=1:length(sigmaS)
-    semilogy(Delta_vgesS(k,:)/1000, mLS/m0S(1) ,'Color', Colors(k,:),...
+    p2(k)=semilogy(Delta_vgesS(k,:)/1000, mLS/m0S(1) ,'Color', Colors(k,:),...
     'LineStyle',Style(1),'LineWidth',2);
     hold on
     lgdstrS(k,:) = sprintf('Stufe %s',num2str(k,2));
@@ -112,9 +115,13 @@ end
 grid on;
 xlim([0, 25]);
 ylim([1e-3, 1]);
+line([7.73 7.73],[0.001 1],'Color', Colors(8,:),...
+    'LineStyle',Style(3),'LineWidth',1);
 ylabel('Nutzlastverhältnis','FontSize',14)
 xlabel('Antriebsvermögen Delta v in km/s','FontSize',14)
-h2 = legend(lgdstrS,'location','northeast'); 
+h2 = legend(p2,lgdstrS,'location','northeast'); 
 set(h2,'FontSize',14,'FontWeight','normal'); 
 legend box off;
+ht = title('Saturn V');
+set(ht,'FontSize',14,'FontWeight','normal'); 
 set(gca,'FontSize',16);

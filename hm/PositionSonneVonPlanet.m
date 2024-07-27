@@ -37,7 +37,7 @@ T1 = juliandate(dt1); % Julianisches Datum  ET
 t1 = Jd2JJht(T1);
 epsErad = deg2rad(EpsErde(T1));
 Aequi = 'J2000';
-Aequi = 'Datum';
+%Aequi = 'Datum';
 [BaPa,BaPadot]=OrbitParameter(T1,Aequi);
 
 for k =1:9

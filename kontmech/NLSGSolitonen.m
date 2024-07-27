@@ -8,7 +8,7 @@
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
 % -------------------------------------------------------------------------
 % Programm propagiert Soliton-Lösungen der nichtlinearen
-% Schrödingergleichung, indem sowhohl analytische Lösungen dargestellt
+% Schrödinger-Gleichung, indem sowhohl analytische Lösungen dargestellt
 % werden als auch die Differentialgleichung direkt mit der
 % Finite-Differenzen-Methode gelöst wird.
 % -------------------------------------------------------------------------
@@ -67,20 +67,20 @@ figure
 subplot(2,1,1)
 v=0.5; g=1.;
 plot(x,abs(NLSGSoliton1(x,0,v/sqrt(g),v,1./v^2,-1./v,NG)).^2, ...
-    'linewidth', 2, 'color', Colors(1,:));
+    'linewidth', 3, 'color', Colors(1,:));
 hold on;
 v=1.;
 plot(x,abs(NLSGSoliton1(x,0,v/sqrt(g),v,1./v^2,-1./v,NG)).^2, ...
-    'linewidth', 2, 'color', Colors(2,:));
+    'linewidth', 3, 'color', Colors(2,:));
 hold on;
 v=2.;
 plot(x,abs(NLSGSoliton1(x,0,v/sqrt(g),v,1./v^2,-1./v,NG)).^2, ...
-    'linewidth', 2, 'color', Colors(3,:));
+    'linewidth', 3, 'color', Colors(3,:));
 hold on;
 v=3.;
 plot(x,abs(NLSGSoliton1(x,0,v/sqrt(g),v,1./v^2,-1./v,NG)).^2, ...
-    'linewidth', 2, 'color', Colors(4,:));
-axis([-10 10 0 10]);
+    'linewidth', 3, 'color', Colors(4,:));
+axis([-6 6 0 10]);
 xlabel('{\itx}');
 ylabel('|{\it\psi}|^2');
 legend('{\itv}=0.5','{\itv}=1.','{\itv}=2.','{\itv}=3.');
@@ -89,20 +89,20 @@ set(gca,'FontSize',16,'FontName','Times');
 subplot(2,1,2)
 v=1; g=0.5;
 plot(x,abs(NLSGSoliton1(x,0,v/sqrt(g),v,1./v^2,-1./v,NG)).^2, ...
-    'linewidth', 2, 'color', Colors(1,:));
+    'linewidth', 3, 'color', Colors(1,:));
 hold on;
 g=1.;
 plot(x,abs(NLSGSoliton1(x,0,v/sqrt(g),v,1./v^2,-1./v,NG)).^2, ...
-    'linewidth', 2, 'color', Colors(2,:));
+    'linewidth', 3, 'color', Colors(2,:));
 hold on;
 g=2.;
 plot(x,abs(NLSGSoliton1(x,0,v/sqrt(g),v,1./v^2,-1./v,NG)).^2, ...
-    'linewidth', 2, 'color', Colors(3,:));
+    'linewidth', 3, 'color', Colors(3,:));
 hold on;
 g=3.;
 plot(x,abs(NLSGSoliton1(x,0,v/sqrt(g),v,1./v^2,-1./v,NG)).^2, ...
-    'linewidth', 2, 'color', Colors(4,:));
-axis([-10 10 0 2.5]);
+    'linewidth', 3, 'color', Colors(4,:));
+axis([-6 6 0 2.5]);
 xlabel('{\itx}');
 ylabel('|{\it\psi}|^2');
 legend('{\itg}=0.5','{\itg}=1.','{\itg}=2.','{\itg}=3.');
@@ -120,7 +120,7 @@ for i = 1:6
       'LineStyle','--');
   axis([min(x) max(x) 0 3]);
   xlabel('{\itx}');
-  ylabel('{|\it\psi}({\itt}|^2)');
+  ylabel('{|\it\psi}({\itt})|^2');
   titletext = sprintf('{\\itt} = %.1f',t(k(i)));
   texto = text(-18,2.5,titletext);
   set(texto,'FontSize',16,'FontWeight','normal','FontName','Times');

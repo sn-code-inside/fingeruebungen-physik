@@ -21,6 +21,29 @@
 %  Name     = Name des Planeten
 % -------------------------------------------------------------------------
 
+% -------------------------------------------------------------------------
+% PlanetPQR.m
+% -------------------------------------------------------------------------
+% MATLAB-Programm zum Kapitel Himmelsmechanik aus
+% "Physikalische Fingerübungen" von Michael Kaschke und Holger Cartarius
+% unter Mitwirkung von Ulrich Potthoff
+% Alle Rechte bei den Autoren
+% Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
+% -------------------------------------------------------------------------
+% Berechnet die heliozentrisch-ekliptikalen Koordinaten der Planeten aus
+% den Bahnpaarmetern für eine bestimmte Zeit 
+%
+% Eingabe:
+%   T                 = Zeit in Julianischem Datum
+%   BaPa, BaPadot     = Orbitparameter im Grad übergeben
+%   k                 = Planetennummer
+% Ausgabe:
+%  ekl      = Heliozentrisch-ekliptikale Koordinaten des Planeten k
+%  xyz      = Heliozentrisch-ekliptikale Koordinaten (xyz) des Planeten k
+%  Time     = Zeitstützstellen in JD
+%  Name     = Name des Planeten
+% -------------------------------------------------------------------------
+
 function PlanetData= PlanetPQR(T, BaPa, BaPadot, k) 
   pi2=2*pi;
   t=Jd2JJht(T); % Zeit in Julianischen Jahrhunderten seit JD2000
@@ -59,4 +82,3 @@ end
 
 % -------------------------------------------------------------------------
 % Ende Funktion
-% -------------------------------------------------------------------------

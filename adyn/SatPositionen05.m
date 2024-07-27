@@ -1,8 +1,8 @@
-%%-------------------------------------------------------------------------
-% SatPositionen03.m
+% -------------------------------------------------------------------------
+% SatPositionen05.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel "Astrodynamik" aus
-% "Physikalische Fingerübungen" von Michael Kaschke und Holger Cartarius
+% "FingerÃ¼bungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
@@ -42,7 +42,7 @@ lambdaB2 = 75;
 LocStr(2,:) = "Russland";
 LocStr(1,:) = "Indien";
 
-%% Vorwärtsrechnung aus Bahnparametern
+%% VorwÃ¤rtsrechnung aus Bahnparametern
 
 aP   = 26555;
 eP   = 0.72;
@@ -60,15 +60,15 @@ theta = GMSTsat(T_vector);
 lon(:) = wrapTo360(rad2deg(SatData.az)-theta);
 
 fprintf('\n');
-fprintf('Bahnparameter für Bahnberechnung nach Kepler\n');
+fprintf('Bahnparameter fÃ¼r Bahnberechnung nach Kepler\n');
 fprintf('\n Zeit  = %s - %s ', dt1, dt2);
 fprintf('\n');
-fprintf('\n a     = %8.2f km  (Große Halbachse)', aP);
-fprintf('\n e     = %8.5f     (Exzentrizität)', eP);
-fprintf('\n i     = %8.2f °   (Inklination)', iP);
-fprintf('\n Omega = %8.2f °   (Rektasz. aufst. Knoten)', OmegaP);
-fprintf('\n omega = %8.2f °   (Argument Perigäum)', omegaP);
-fprintf('\n M     = %8.2f °   (Mittlere Anomalie)', M);
+fprintf('\n a     = %8.2f km  (GroÃŸe Halbachse)', aP);
+fprintf('\n e     = %8.5f     (ExzentrizitÃ¤t)', eP);
+fprintf('\n i     = %8.2f Â°   (Inklination)', iP);
+fprintf('\n Omega = %8.2f Â°   (Rektasz. aufst. Knoten)', OmegaP);
+fprintf('\n omega = %8.2f Â°   (Argument PerigÃ¤um)', omegaP);
+fprintf('\n M     = %8.2f Â°   (Mittlere Anomalie)', M);
 fprintf('\n TP    = %8.2f min (Umlaufzeit)', TPn*24*60);
 fprintf('\n');
 fprintf('\n');
@@ -146,17 +146,17 @@ plot(datetime(SatData.Time,'ConvertFrom','juliandate'),hoehe1,...
 hold on
 plot(datetime(SatData.Time,'ConvertFrom','juliandate'),hoehe2,...
     'LineWidth',2,'LineStyle',Style(3));
-ylabel('Hoehe in °')
+ylabel('Hoehe in Â°')
 ylim([0,90]);
 yyaxis right
-ylabel('Azimut in °')
+ylabel('Azimut in Â°')
 p(1)=plot(datetime(SatData.Time,'ConvertFrom','juliandate'),Az1,...
     'LineWidth',2);
 hold on
 p(2)=plot(datetime(SatData.Time,'ConvertFrom','juliandate'),Az2,...
     'LineWidth',2,'LineStyle',Style(3));
 grid on;
-hp1 = title('Höhe und Azimut','FontSize',12);
+hp1 = title('HÃ¶he und Azimut','FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
 hp2=legend(p(1:2),LocStr(1:2,:),'location','south','NumColumns',1);
 set(hp2,'FontSize',14,'FontWeight','normal');

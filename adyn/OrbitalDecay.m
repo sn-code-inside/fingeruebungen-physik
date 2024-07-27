@@ -1,8 +1,8 @@
-%%-------------------------------------------------------------------------
+% -------------------------------------------------------------------------
 % OrbitalDecay.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel "Astrodynamik" aus
-% "Finger¸bungen der Physik" von Michael Kaschke und Holger Cartarius
+% "Finger√ºbungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
@@ -36,42 +36,42 @@ P1.rho0   = rho0;
 P1.RE     = RE;
 P1.H0     = H0;
 P1.H      = H;
-P1.Re     = 122;          % Wiedereintrittssph‰renradius
+P1.Re     = 122;          % Wiedereintrittssph√§renradius
 
 
-%% Check Dichteabh‰ngigkeit
+%% Check Dichteabh√§ngigkeit
 % h    = linspace(0,500,501);
 % rho  = calculate_rho(h, H, H0);
 % plot(h,rho);
 
-%% Hˆhenberechnung
+%% H√∂henberechnung
 
 tdays    = 80;
 tend     = tdays*24*60*60;
 
-% MATLABs Runge-Kutta ode45 Routine f¸r Apog‰um
+% MATLABs Runge-Kutta ode45 Routine f√ºr Apog√§um
 Aeff      = 63.1e-6;      % Aeff in km^2
 kappa     = sqrt(GME)*Aeff/mR;
 P1.kappa  = kappa;
 h0        = 284;            
-AB        = h0;          % AB f√ºr DGL Apog‰um
+AB        = h0;          % AB f√ºr DGL Apog√§um
 opts = odeset('AbsTol',1.e-9,'RelTol',1.e-8,'Events',@Ereignis);
 [tA,YA]=ode45(@(t,YA, P1)DGL_OrbitalDecay(t,YA,P1),[0 tend],AB,opts,P1);
 
-% MATLABs Runge-Kutta ode45 Routine f¸r Perig‰um
+% MATLABs Runge-Kutta ode45 Routine f√ºr Perig√§um
 Aeff      = 33.025e-6;      % Aeff in km^2
 kappa     = sqrt(GME)*Aeff/mR;
 P1.kappa  = kappa;
 h0        = 265;            
-AB        = h0;          % AB f√ºr DGL Perig‰um
+AB        = h0;          % AB f√ºr DGL Perig√§um
 [tP,YP]=ode45(@(t,YP, P1)DGL_OrbitalDecay(t,YP,P1),[0 tend],AB,opts,P1);
 
-% MATLABs Runge-Kutta ode45 Routine f¸r mittlere Hˆhe
+% MATLABs Runge-Kutta ode45 Routine f√ºr mittlere H√∂he
 Aeff      = 46.45e-6;      % Aeff in km^2
 kappa     = sqrt(GME)*Aeff/mR;
 P1.kappa  = kappa;
 h0        = 275;            
-AB        = h0;          % AB f√ºr DGL Perig‰um
+AB        = h0;          % AB f√ºr DGL Perig√§um
 [tM,YM]=ode45(@(t,YM, P1)DGL_OrbitalDecay(t,YM,P1),[0 tend],AB,opts,P1);
 
 
@@ -85,12 +85,12 @@ plot(tP,YP,'color',Colors(2,:))
 tM = tM/60/60/24;
 plot(tM,YM,'color',Colors(4,:))
 line([0 tdays],[P1.Re P1.Re])
-ylabel('Hˆhe h','FontSize',14)
+ylabel('H√∂he h','FontSize',14)
 xlabel('Zeit in Tagen seit 01.02.2018','FontSize',14)
 grid on;
 h1 = title('Orbital Decay Tiangong-1','FontSize',12);
 set(h1,'FontSize',14,'FontWeight','normal'); 
-h2=legend('Apog‰um','Perig‰um','mittlere Hˆhe','Reentry-Hˆhe'); 
+h2=legend('Apog√§um','Perig√§um','mittlere H√∂he','Reentry-H√∂he'); 
 set(h2,'FontSize',14,'FontWeight','normal'); 
 axis([0, tdays, 100 300]);
 legend box off;
@@ -131,7 +131,7 @@ P1.RE     = RE;
 P1.H0     = H0;
 P1.H      = H;
 P1.kappa  = Aeff;
-P1.Re     = 122;          % Wiedereintrittssph‰renradius
+P1.Re     = 122;          % Wiedereintrittssph√§renradius
 h0        = 427;            
 AB        = h0;            % AB f√ºr DGL
 tdays     = 11;
@@ -145,7 +145,7 @@ figure('name','ISS')
 th = t/60/60/24;
 plot(th,Y,'color',Colors(3,:))
 ylim([h0-15, h0+1]);
-ylabel('Hˆhe h','FontSize',14)
+ylabel('H√∂he h','FontSize',14)
 xlabel('Zeit in Tagen','FontSize',14)
 grid on;
 hp1 = title('Orbital Decay ISS','FontSize',12);
@@ -175,7 +175,6 @@ end
 function rho = calculate_rho(h, a, b)
     rho  = 0.6*exp(-(h-a)/b); 
 end
-
-    %% Ende Programm
+%% Ende Programm
 
 

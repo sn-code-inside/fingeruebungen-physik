@@ -36,7 +36,7 @@ deltat = tend/tsteps;
 vph_0   = 10.0;
 % vd      = 0;                          % Dispersionsparameter = 0 m/s
 vd      = -5;                           % Dispersionsparameter = -0.7 m/s
-lambda0 = 2.0;                          % Wellenl‰nge 1 in m
+lambda0 = 2.0;                          % Wellenl√§nge 1 in m
 k0      = 2*pi/lambda0 ;                % Wellenzahl  in m/s
 
 %% Calculate and plot the evolution in an optical fiber of a Gaussian pulse

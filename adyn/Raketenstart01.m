@@ -36,12 +36,12 @@ vN    = RE/tN;                    % Einheit der Geschwindigkeit
 FN    = ME*RE/tN^2;               % Einheit der Kraft               
 
 mi = 2.8e6;                       % Anfänglicher Payload+Treibstoff in kg 
-fT = 0.96;  mT = mi*fT;           % Anteil und Masse Treibstoff (norm.)
+fT = 0.9825;  mT = mi*fT;           % Anteil und Masse Treibstoff (norm.)
 
 Schub = 1.5*(G*mi*ME/RE^2);       % Schub = 1.5 x initiales Gewicht in N
 u     = 3000;                     % Austrittsgeschwindigkeit m/s 
 
-theta  = deg2rad(55);             % Start Winkel = Brennwinkel 
+theta  = deg2rad(75);             % Start Winkel = Brennwinkel 
 P1.ux=u*cos(theta); 
 P1.uy=u*sin(theta);               
 
@@ -69,7 +69,7 @@ xmax = max(Y(:,1));
 ymax = max(Y(:,3));
 
 n=length(t);                  
-for i=1:n                          % Auswahl Punkte ober Erdoberfläche
+for i=1:n                      % Auswahl Punkte oberhalb Erdoberfläche
   if sqrt(Y(i,1)^2+Y(i,3)^2) >= 0.99*RE 
      nn=i;
      t1(i)=t(i);
@@ -126,7 +126,7 @@ set(gca,'FontSize',16);
 figure()
 hold on
 L=1.25*sqrt(xmax^2+ymax^2)/1000;      %Plotgröße
-phi = [0:0.025:2*pi];
+phi = 0:0.025:2*pi;
 xE=RE*cos(phi);yE=RE*sin(phi);             %Erdumfang
 axis ([-L L -L L])           %windows size
 axis square                  %square window
@@ -146,7 +146,7 @@ text(-0.95*L,+L*(1-0.25),str3,'FontSize',12)
 warning off;
 Range=RE*abs(atan(y1(nn)/x1(nn))-atan(y0/x0));
 str6=cat(2,' \alpha = ',num2str(alpha,3),...
-           ' kg/s , Reichweite = ',num2str(Range,3),' m');
+           ' kg/s , Reichweite = ',num2str(Range/1000,5),' km');
 text(-0.95*L,+L*(1-0.375),str6,'FontSize',12)
 hp(1) = plot(xE/1000,yE/1000,'color',Colors(3,:),'Linewidth',2); %Erde
 hp(2) = plot(x1/1000,y1/1000,'color', Colors(4,:),...
