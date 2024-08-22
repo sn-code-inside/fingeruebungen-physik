@@ -62,7 +62,9 @@ P1.G   = G;
 P1.m0  = m0;
 P1.NK  = NK;
 opts = odeset('AbsTol',1.e-14,'RelTol',1.e-13);
-[tA,YA]=ode45(@(t,YA, P1)DGL_3BodySystem(t,YA,P1),[0 tend],AB,opts,P1);
+[t,Y]    = SatellitenPfad(P1, tv, AB);
+
+% [tA,YA]=ode45(@(t,YA, P1)DGL_3BodySystem(t,YA,P1),[0 tend],AB,opts,P1);
 
 %% Graphische Ausgabe
 

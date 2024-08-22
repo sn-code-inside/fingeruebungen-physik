@@ -60,7 +60,7 @@ results = solvepde(model);
 
 %% Darstellen der Lösung
 u = results.NodalSolution;
-pdeplot(model,"XYData",u,"ZData",u,"Mesh","on")
+pdeplot(model,"XYData",u,"ZData",u,"Mesh","off")
 axis([-0.15 0.15 -0.15 0.15]);
 colormap(cmap)
 xlabel("{\itx} in m");

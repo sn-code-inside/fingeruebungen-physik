@@ -2,7 +2,7 @@
 % ReentryReal.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel "Astrodynamik" aus
-% "FingerÃ¼bungen der Physik" von Michael Kaschke und Holger Cartarius
+% "Fingerübungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
@@ -28,10 +28,10 @@ Colors=GetColorLines;
 G   = 6.67430e-11;                 % G in m3 /kg /s2
 ME  = 5.98e24;                     % Masse der Erde in kg
 RE  = 6.378e3;                     % Erdradiuse in km
-muE = G*ME*1e-9;                   % Âµ in km3 /kg /s2
+muE = G*ME*1e-9;                   % µ in km3 /kg /s2
 gE  = muE/RE^2;                    % gE in km/s^2
-hA  = 400;                         % AnfangshÃ¶he in km
-hRe = 122;                         % Reentry HÃ¶he in km
+hA  = 400;                         % Anfangshöhe in km
+hRe = 122;                         % Reentry Höhe in km
 rA      = RE + hA;
 rRe     = RE + hRe;
 vA      = sqrt(muE/rA);
@@ -45,7 +45,7 @@ gammaRe = deg2rad(5);                             % FPA @ Reentry
 vRe     = vA*(1+0.75*qminus-gammaRe^2/8/qminus);  % v @ Reentry
 
 Deltav  = 0.25*vA*(qminus+gammaRe^2/2/qminus);    % Delta v for Reentry
-%oder genauer
+% oder genauer
 Deltav  = cos(gammaRe)*vRe/q - vA;                % Delta v for Reentry
 exz     = (q^2-(2*q-1)*(cos(gammaRe))^2)/(q^2-(cos(gammaRe))^2);
 a       = rA/(1+exz);
@@ -63,14 +63,14 @@ mL         = 5e03;                % Payload in kg
 rho0       = 1.752e09;            % Dichte in kg/km^3
 H0         = 6.7;                 % H0 in km
 kappaD     = 25;                  % normierte Widerstandswert
-cwD        = 2*kappaD*mL/rho0/H0; % Drag Widerstandsbeiwert x FlÃ¤che km^2 
+cwD        = 2*kappaD*mL/rho0/H0; % Drag Widerstandsbeiwert x Fläche km^2 
 facAD      = [0;0.1;0.2;0.3;0.4;0.5];
-cwAvec     = facAD*cwD;           % Auftriebswiderstandswert x FlÃ¤che km^2 
+cwAvec     = facAD*cwD;           % Auftriebswiderstandswert x Fläche km^2 
 
 % Barometrische Höhenformel
 rho        = @(h)rho0*exp(-h/H0);  
 
-% AB fÃƒÂ¼r DGL
+% AB fÃ¼r DGL
 P1.mL     = mL;
 P1.gE     = gE;
 P1.RE     = RE;
@@ -83,7 +83,7 @@ tmax = round(1.25*sqrt(2*hRe/gE/sin(gammaRe))/100)*100;
 xmax = round(1.5*hRe/tan(gammaRe)/200)*200;
 hmax = 125;
 tspan1 = linspace(0,tmax,1001);
-% Schleife über verschieden Drag/Auftriebsverhältnisse
+% Schleife über verschiede Drag/Auftriebsverhältnisse
 for k=1:length(cwAvec)
     P1.facAD    = facAD(k);
     [t,Y1]      = ode45(@DGL_Reentry, tspan1, AB1, opts, P1, rho);

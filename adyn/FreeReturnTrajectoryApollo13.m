@@ -1,5 +1,5 @@
 % -------------------------------------------------------------------------
-% FreReturTrajectory.m
+% FreReturnTrajectoryApollo13.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel "Physik der Bewegung" aus
 % "Fingerübungen der Physik" von Michael Kaschke und Holger Cartarius
@@ -35,97 +35,42 @@ vM     = omegaM*rEM;               % Bahngeschwindigkeit Mond in m/s
 RSOIM  = rEM*(MM/ME)^(2/5);        % SOI-Radius Mond
 muE    = G*ME;
 muM    = G*MM;
+% Ausgangsparameter
+h0      = 169609;
+r0      = h0+RE;
 
 
-%% Berechnung ToF
+%AB und Parameter Raumschiff für DGL
+P1.RE    = RE;
+P1.RM    = RM;
+P1.h0    = h0;
+P1.muE   = muE;
+P1.muM   = muM;
+P1.omegaM= omegaM;
+
+
+%% Berechnung ToF in Patch Conic
 % ToF bis zur SOI des Mondes für verschiedene Anfangsparameter 
 % Suche nach optimalen Parametern für kleine Periselenium und kleinem
 % Perigäum bei Return
 
-% Ausgangsparameter
-h0      = 169609;
-r0      = h0+RE;
+%% Berechnung ToF für Patch Conic
+% ToF bis zur SOI des Mondes für verschiedene Anfangsparameter 
+% Suche nach optimalen Parametern für kleine Periselenium und kleinem
+% Perigäum bei Return
+
 %Variiert werden v0 und lambda 1
 
 gamma0  = 0;
 lambda1 = deg2rad(linspace(30,90,601));
 % Energie Drehimpuls @ TLI
 
+v01      = 10960;
 kend = 4;
-for k=1:kend
-    v0      = 10950+(k-1)*5;
-    lgdstr(k,:) = sprintf('v_0 = %7.3f km/s',v0/1000);
-    H0      = v0^2/2-muE/r0;
-    L0      = v0*r0;
+[TOFh,~,~,hPM,lgdstr]=PatchConic(kend,muE,muM,RSOIM,r0,rEM,...
+                                              omegaM,vM,RM,lambda1,v01);
 
-    % r, v  @ TLI 
-    r1      = sqrt(RSOIM^2+rEM^2-2*RSOIM*rEM*cos(lambda1));
-    v1      = sqrt(2*(H0+muE./r1));
-    
-    % FPA @ SOI Mond
-    gamma1  = acos(L0./r1./v1);
-    gamma1d = rad2deg(gamma1);
-    
-    % Phasenwinkel Moon @ SOI
-    phi1    = asin(RSOIM*sin(lambda1)./r1);
-    phi1d   = rad2deg(phi1);
-    
-    % TOF
-    % Ellipsen-Parameter
-    
-    p0      = L0^2/muE;
-    a0      = -muE/H0/2;
-    exz0    = sqrt(1-p0/a0);
-    cosups0 = 1;
-    ups0    = acos(cosups0);
-    ups0d   = acosd(cosups0);
-    cosE0   = (exz0+cosups0)/(1+exz0*cosups0);
-    E0      = acos(cosE0);
-    E0d     = acosd(cosE0);
-    sinE0   = sin(E0);
-    
-    cosups1 = (p0-r1)/exz0./r1;
-    ups1    = acos(cosups1);
-    ups1d   = acosd(cosups1);
-    cosE1   = (exz0+cosups1)./(1+exz0.*cosups1);
-    E1      = acos(cosE1);
-    E1d     = acosd(cosE1);
-    sinE1   = sin(E1);
-    
-    fac     = sqrt(a0^3/muE);
-    TOF     = fac*(E1- E0 -exz0*(sinE1-sinE0));
-    TOFh(k,:)    = TOF/3600;
-    
-    % Phasenwinkel @ TLI
-    phi0    = ups1-ups0-phi1-omegaM*TOF;
-    phi0d   = rad2deg(phi0);
-    
-    % Übergang Mond KOS
-    r2      = RSOIM;
-    v2      = sqrt(v1.^2+vM^2-2*v1.*vM.*cos(gamma1-phi1)); 
-    eps2    = asin(vM*cos(lambda1)./v2 - v1.*cos(lambda1+phi1-gamma1)./v2);
-    eps2d   = rad2deg(eps2);
-    H2      = v2.^2/2-muM./r2;
-    % Falls H2 > 0 dann Hyperbelbahn und auch exz2 >1
-    L2      = v2.*r2.*sin(eps2);
-    p2      = L2.^2/muM;
-    exz2    = sqrt(1+2*H2.*L2.^2./muM^2);
-    rPM     = p2./(1+exz2);
-    vPM     = sqrt(2*(H2+muM./rPM));
-    hPM(k,:)     = rPM-RM;
-    
-    EH2      = acosh((1+r2*(exz2-1)./rPM)./exz2);
-    a2B      = r2./(exz2.*cosh(EH2)-1);
-    cosups2 = a2B.*(exz2-cosh(EH2))./r2;
-    ups2    = acos(cosups2);
-    ups2d   = acosd(cosups2);
-    
-    % Flugzeit um Mond (innerhalb SOI)
-    TOFM  = 2*sqrt(a2B.^3/muM).*(exz2.*sinh(EH2)-EH2);
-    TOFMh(k,:) = TOFM/3600;
-end
-
-% Graphik für Ergebnisse aus Patch Conic
+%% Graphik für Ergebnisse aus Patch Conic
 figure('name','Patch Conic Näherung')
 yyaxis left
 hold on
@@ -133,10 +78,10 @@ for k=1:kend
     hp(k)=plot(rad2deg(lambda1(:)),hPM(k,:)/1000,...
         'linestyle',Style(k),'linewidth',2);
 end
-axis([30, 90, 0 2500])
-yticks([0 500 1000 1500 2000 2500])
+axis([30, 90, -2000 3000])
+yticks([-2000 -1000 0 1000 2000 3000])
 legend box off;
-ylabel('minimale Höhe über Mond in km','FontSize',14)
+ylabel('minimale Höhe über Mondoberfläche in km','FontSize',14)
 grid on
 set(gca,'FontSize',16);
 
@@ -156,27 +101,35 @@ xlabel('\lambda_1 in °','FontSize',14)
 grid on
 set(gca,'FontSize',16);
 
+%% Berechnung Patch Conic für einen Wert von lambda1, v01
+
+lambda1 = deg2rad(49.7);
+kend    = 1;
+[TOFh,TOFMh,phi0d,hPM,lgdstr]=PatchConic(kend,muE,muM,RSOIM,r0,rEM,...
+                                              omegaM,vM,RM,lambda1,v01);
+
+fprintf('\n');
+fprintf('Patch Conic Berechnungen\n');
+fprintf('\n');
+fprintf('h0             :    %6.1f km \n',  h0/1000);
+fprintf('v0             :  %8.1f m/s \n',v01);
+fprintf('lambda1        :    %7.2f° \n', rad2deg(lambda1));
+fprintf('phi0           :    %7.2f° \n', phi0d);
+fprintf('ToF zum Mond   :    %6.1f h \n', TOFh+TOFMh/2 );
+fprintf('h_min am  Mond :   %+7.1f km \n',hPM/1000);
+fprintf('\n');
 %% Numerik
 
 % Wir nutzen als Startwerte die Ergebnisse für den Parametersatz 
 lambda1 = deg2rad(49.7);
-v0      = 10960.00;
-TOF     = 69.3952*3600;
-% und verkleinern phi0. Das macht Sinn, da ja die Erdanziehung auch noch
+v0      = v01;
+alpha0  = pi/4;      %eigentlich irrelevant, da nur Verschiebung
+% Wir verkleinern phi0 etwas gegegenüber Patch Conic. 
+% Das macht Sinn, da ja die Erdanziehung auch noch
 % etwas im Bereich der Mond-SOI wirkt und umgekehrt. Wir setzen als phi0
-% als variable an.
-phi0    = deg2rad(130.4269)-deg2rad(1.135);
-alpha0  = omegaM*TOF;
-beta0   = alpha0+phi0;
-
-%AB und Parameter Raumschiff für DGL
-P1.RE    = RE;
-P1.RM    = RM;
-P1.h0    = h0;
-P1.muE   = muE;
-P1.muM   = muM;
-P1.omegaM= omegaM;
-
+% als Variable an.
+phi0    = deg2rad(129.3253);
+beta0   = phi0+alpha0;
 
 %Mond @TLI 
 XM0     = rEM*cos(-alpha0);
@@ -189,8 +142,8 @@ dYM0    = +omegaM*rEM*cos(-alpha0);
 dxR0    = -v0*sin(-beta0);
 dyR0    = +v0*cos(-beta0);
 
-AB     = [XM0 dXM0 YM0 dYM0 xR0 dxR0 yR0 dyR0];       % AB Mond und Rakete
-tv     = linspace(0,3*TOF,10001);             % Max Dauer Berechnung 3*TOF
+AB     = [XM0 dXM0 YM0 dYM0 xR0 dxR0 yR0 dyR0];  % AB Mond und Rakete
+tv     = linspace(0,192*3600,50001);             % Max Dauer Berechnung 
 
 %% Berechnung 
 opts     = odeset('AbsTol',1.e-9,'RelTol',1.e-8);
@@ -208,37 +161,46 @@ rRE  = sqrt((xR).^2+(yR).^2);
 rRE1  = rRE(IminM:length(rRE));
 [min_rRE,IminE] = min(rRE1);
 
-
 fprintf('\n');
-fprintf('h0             :   %6.1f km \n', h0/1000);
-fprintf('v0             :   %8.3f km/s \n', v0/1000);
-fprintf('phi0           :   %7.2f ° \n', rad2deg(phi0));
-fprintf('lambda1        :   %7.2f ° \n', rad2deg(lambda1));
-fprintf('ToF zum Mond   :   %6.1f h \n', t(IminM)/3600);
-fprintf('Gesamtflugzeit :   %6.1f h \n', t(end)/3600);
-fprintf('h_min am  Mond :  %+7.1f km \n', (min_rRM-RM)/1000);
-fprintf('h_end zur Erde : %+8.1f km \n', (min_rRE-RE)/1000);
+fprintf('Numerische Berechnungen\n');
+fprintf('\n');
+fprintf('h0             :     %6.1f km \n', h0/1000);
+fprintf('v0             :   %8.1f m/s \n', v0);
+fprintf('phi0           :     %7.2f°  \n', rad2deg(phi0));
+fprintf('ToF zum Mond   :     %6.1f h \n', t(IminM)/3600);
+fprintf('Gesamtflugzeit :     %6.1f h \n', t(end)/3600);
+fprintf('h_min am  Mond :    %+7.1f km \n',(min_rRM-RM)/1000);
+fprintf('h_end zur Erde :   %+8.1f km \n', (min_rRE-RE)/1000);
 fprintf('\n');
 
-ups  = linspace(0,2*pi,361);
-xRE  = RE*cos(ups);
-yRE  = RE*sin(ups);
-
+% Mond, Erde Darstellung
+[xRE0,yRE0]=Kreis(RE,0,0);
+[xRM0,yRM0]=Kreis(RM,XM(1),YM(1));
+[xRMend,yRMend]=Kreis(RM,XM(end),YM(end));
+[xRMarr,yRMarr]=Kreis(RM,XM(IminM),YM(IminM));
+Iacc = 14093;
 figure('Name','Numerische Rechnung Free Return Trajectory')
 hold on
-hp(1)=plot(xRE/1000,yRE/1000,LW,2);
-hp(2)=plot(xR/1000,yR/1000,LW,2);
-hp(3)=plot(XM/1000,YM/1000,LW,2,LS,':');
+hp2(4)=plot(xR/1000,yR/1000,LW,2,LC,Colors(4,:));
+hp2(2)=plot(XM/1000,YM/1000,LW,2,LS,':',LC,Colors(10,:));
+hp2(1)=plot(xRE0/1000,yRE0/1000,LW,1,LC,Colors(3,:));
+plot(xRM0/1000,yRM0/1000,LW,1,LC,Colors(10,:));
+plot(xRMend/1000,yRMend/1000,LW,1,LC,Colors(10,:));
+plot(xRMarr/1000,yRMarr/1000,LW,1,LC,Colors(10,:));
+hp2(3) = line([0 XM0]/1000,[0 YM0]/1000);
+line([0 XM(end)]/1000,[0 YM(end)]/1000);
+line([0 XM(IminM)]/1000,[0 YM(IminM)]/1000);
+hp2(5)=plot(xR(Iacc)/1000,yR(Iacc)/1000,'dr',LW,2,'markersize',6);
 axis equal
 grid on
-hp2=legend(hp(1:3),'Erde','Free Return Trajectory','Mondbahn',...
+hp3=legend(hp2(1:5),'Erde @TLI','Mondbahn','Erde @ return', ...
+    'FRT Apollo13', 'Ort der Explosion', ...
     'location','southwest'); 
-set(hp2,'FontSize',14,'FontWeight','normal'); 
+set(hp3,'FontSize',14,'FontWeight','normal'); 
 legend box off;
 xlabel('x in km','FontSize',14); 
 ylabel('y in km','FontSize',14)
 set(gca,'FontSize',16);
-
 
 % -------------------------------------------------------------------------
 % Funktionen
@@ -276,6 +238,83 @@ function dY = MoonTrajectory(t, Y, P1)
     dY(6)  = -muE*xR./rR.^3+muM*(XM-xR)/rM.^3;    
     dY(7)  =  Y(8);
     dY(8)  = -muE*yR./rR.^3+muM*(YM-yR)/rM.^3;  
+end
+
+function [TOFh,TOFMh,phi0d,hPM,lgdstr]=PatchConic(kend,muE,muM,RSOIM,r0,rEM,...
+                                             omegaM,vM,RM,lambda1,v01)
+  for k=1:kend
+    if kend ==1
+        v0 = v01;
+    else
+        v0      = 10950+(k-1)*5;
+    end
+    lgdstr(k,:) = sprintf('v_0 = %7.3f km/s',v0/1000);
+    H0      = v0^2/2-muE/r0;
+    L0      = v0*r0;
+
+    % r, v  @ TLI 
+    r1      = sqrt(RSOIM^2+rEM^2-2*RSOIM*rEM*cos(lambda1));
+    v1      = sqrt(2*(H0+muE./r1));
+    
+    % FPA @ SOI Mond
+    gamma1  = acos(L0./r1./v1);
+    gamma1d = rad2deg(gamma1);
+    
+    % Phasenwinkel Moon @ SOI
+    phi1    = asin(RSOIM*sin(lambda1)./r1);
+    
+    % TOF
+    % Ellipsen-Parameter
+    
+    p0      = L0^2/muE;
+    a0      = -muE/H0/2;
+    exz0    = sqrt(1-p0/a0);
+    cosups0 = 1;
+    ups0    = acos(cosups0);
+    cosE0   = (exz0+cosups0)/(1+exz0*cosups0);
+    E0      = acos(cosE0);
+    sinE0   = sin(E0);
+    cosups1 = (p0-r1)/exz0./r1;
+    ups1    = acos(cosups1);
+    cosE1   = (exz0+cosups1)./(1+exz0.*cosups1);
+    E1      = acos(cosE1);
+    sinE1   = sin(E1);
+    
+    fac     = sqrt(a0^3/muE);
+    TOF     = fac*(E1- E0 -exz0*(sinE1-sinE0));
+    TOFh(k,:)    = TOF/3600;
+    
+    % Phasenwinkel @ TLI
+    phi0    = ups1-ups0-phi1-omegaM*TOF;
+    phi0d   = rad2deg(phi0);
+    
+    % Übergang Mond KOS
+    r2      = RSOIM;
+    v2      = sqrt(v1.^2+vM^2-2*v1.*vM.*cos(gamma1-phi1)); 
+    eps2    = asin(vM*cos(lambda1)./v2 - v1.*cos(lambda1+phi1-gamma1)./v2);
+    H2      = v2.^2/2-muM./r2;
+    % Falls H2 > 0 dann Hyperbelbahn und auch exz2 >1
+    L2      = v2.*r2.*sin(eps2);
+    p2      = L2.^2/muM;
+    exz2    = sqrt(1+2*H2.*L2.^2./muM^2);
+    rPM     = p2./(1+exz2);
+    vPM     = sqrt(2*(H2+muM./rPM));
+    hPM(k,:)= rPM-RM;
+   
+    EH2      = acosh((1+r2*(exz2-1)./rPM)./exz2);
+    a2B      = r2./(exz2.*cosh(EH2)-1);
+    cosups2 = a2B.*(exz2-cosh(EH2))./r2;
+    ups2    = acos(cosups2);
+    % Flugzeit um Mond (innerhalb SOI)
+    TOFM  = 2*sqrt(a2B.^3/muM).*(exz2.*sinh(EH2)-EH2);
+    TOFMh(k,:) = TOFM/3600;
+  end
+end
+
+function [xR,yR]=Kreis(R,XM,YM) 
+    ups = linspace(0,2*pi,361);
+    xR  = R*cos(ups)+XM;
+    yR  = R*sin(ups)+YM;
 end
 
 % Ende Funktionen

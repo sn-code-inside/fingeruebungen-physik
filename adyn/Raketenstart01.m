@@ -154,14 +154,14 @@ hp(2) = plot(x1/1000,y1/1000,'color', Colors(4,:),...
 i=1;
 hp(3) = plot(x1(i)/1000,y1(i)/1000,'d','color', Colors(4,:)); % Rakete
 h = hp(3);
-% for i=2:nn                     
-%   h.Visible = 'off';
-%   h = plot(x1(i)/1000,y1(i)/1000,'d','color', Colors(4,:));%Position Rakete
-%   h.Visible = 'on';
-%   pause(0.1)
-% end
-% h = legend(hp,'Erde','Trajektorie', 'Rakete','location','south'); 
-% set(h,'FontSize',12); legend box off;
+for i=2:nn                     
+  h.Visible = 'off';
+  h = plot(x1(i)/1000,y1(i)/1000,'d','color', Colors(4,:));%Position Rakete
+  h.Visible = 'on';
+  pause(0.1)
+end
+h = legend(hp,'Erde','Trajektorie', 'Rakete','location','south'); 
+set(h,'FontSize',12); legend box off;
 
 
 %%

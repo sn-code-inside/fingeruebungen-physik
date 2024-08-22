@@ -25,29 +25,33 @@ Style = ["-", "-.", ":", "--", ":"];
 % Parameter
 GME = 398600.4415;  % in km^3/s^2
 RE  = 6378;         % in km
-dt1 = datetime('2020-01-01 00:00:0');
-T1 = juliandate(dt1); % Julianisches Datum  ET
-dt2 = datetime('2020-01-01 01:00:00');
-T2 = juliandate(dt2); % Julianisches Datum  ET
-NPoints = 1001;
-T_vector=linspace(T1,T2,NPoints);
+
+% Beobachtungszeiten
+dt1 = datetime(['2020-01-01 00:00:00']);
+T1  = juliandate(dt1); % Julianisches Datum  ET
+dt2 = datetime('2020-01-01 00:15:00');
+T2  = juliandate(dt2); % Julianisches Datum  ET
+NPoints     = 151;
+T_vector   = linspace(T1,T2,NPoints);
 
 % Stationen
-phiB     = [51,60];  %1 G�rlitz  2 %Marienhamn (Schweden)
+phiB     = [51,60];  %1 Görlitz  2 %Marienhamn (Schweden)
 lambdaB  = [15,20];  
-LocStr(1,:) = "G�rlitz (D)";
+LocStr(1,:) = "Görlitz (D)";
 LocStr(2,:) = "Marienham (S)";
 %% Vorwärtsrechnung aus Bahnparametern
 
-% Berechnung Bahn nach Keplerlösung
-aP   = RE+900;
-eP   = 0.0;
-iP   = 95; 
-OmegaP = 135;
-omegaP = 0;
-TPn  = 2*pi*sqrt(aP^3/GME)/86400;
-M    = 20;
-SatHEO.BaPa =[aP , eP, iP , M, OmegaP, omegaP];
+
+aP      = RE+2000;
+eP      = 0.1;
+iP      = 95; 
+OmegaP  = 135;
+omegaP  = 10;
+TPn     = 2*pi*sqrt(aP^3/GME)/86400;
+MP      = 10;
+
+
+SatHEO.BaPa =[aP , eP, iP , MP, OmegaP, omegaP];
 SatHEO.Name = 'Polar-Satellit';
 SatData = SatPQR(T_vector, SatHEO, GME);
 lat1(:) = rad2deg(SatData.el);
@@ -60,10 +64,12 @@ fprintf('\n Zeit  = %s', dt1);
 fprintf('\n');
 fprintf('\n a     = %8.2f km  (Große Halbachse)', aP);
 fprintf('\n e     = %8.5f     (Exzentrizität)', eP);
-fprintf('\n i     = %8.2f     (Inklination)', iP);
-fprintf('\n Omega = %8.2f     (Rektasz. aufst. Knoten)', OmegaP);
-fprintf('\n omega = %8.2f     (Argument Perigäum)', omegaP);
+fprintf('\n i     = %8.2f °   (Inklination)', iP);
+fprintf('\n Omega = %8.2f °   (Rektasz. aufst. Knoten)', OmegaP);
+fprintf('\n omega = %8.2f °   (Argument Perigäum)', omegaP);
+fprintf('\n M     = %8.2f °   (Mittlere Anomalie Beobachtungsstart)', MP);
 fprintf('\n TP    = %8.2f min (Umlaufzeit)', TPn*24*60);
+fprintf('\n TP    = %8.2f h   (Umlaufzeit)', TPn*24);
 fprintf('\n');
 fprintf('\n');
 
@@ -89,7 +95,7 @@ set(gca,'FontSize',14);
 xS  = aP*[cosd(lat1).*cosd(lon1);cosd(lat1).*sind(lon1);sind(lat1)];
 xB = RE*([cosd(phiB).*cosd(lambdaB);cosd(phiB).*sind(lambdaB);sind(phiB)]);
 
-%G�rlitz
+%Görlitz
 XS1 = xS - xB(:,1); 
 distance1 = vecnorm(XS1);
 eO = [-sind(lambdaB(1));cosd(lambdaB(1));0];
@@ -134,19 +140,22 @@ plot(datetime(SatData.Time,'ConvertFrom','juliandate'),hoehe1,...
 hold on
 plot(datetime(SatData.Time,'ConvertFrom','juliandate'),hoehe2,...
     'LineWidth',2,'LineStyle',Style(3));
-ylabel('Hoehe in �')
+ylabel('Hoehe in °')
 ylim([0,90]);
+yticks([0,30,60,90]);
 yyaxis right
-ylabel('Azimut in �')
+ylabel('Azimut in °')
 p(1)=plot(datetime(SatData.Time,'ConvertFrom','juliandate'),Az1,...
     'LineWidth',2);
 hold on
 p(2)=plot(datetime(SatData.Time,'ConvertFrom','juliandate'),Az2,...
     'LineWidth',2,'LineStyle',Style(3));
+ylim([0,180]);
+yticks([0 45 90 135 180]);
 grid on;
-hp1 = title('H�he und Azimut','FontSize',12);
+hp1 = title('Höhe und Azimut','FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
-hp2=legend(p(1:2),LocStr(1:2,:),'location','northeast','NumColumns',1);
+hp2=legend(p(1:2),LocStr(1:2,:),'location','west','NumColumns',1);
 set(hp2,'FontSize',14,'FontWeight','normal');
 legend box off
 set(gca,'FontSize',14);
@@ -159,11 +168,12 @@ hold on
 plot(datetime(SatData.Time,'ConvertFrom','juliandate'),...
      distance2,'color',Colors(3,:),'LineWidth',2,'LineStyle',Style(3));
 ylabel('Entfernung in km')
-ylim([0,1.1*max(max(distance1),max(distance2))]);
+ylim([0 6000])
+yticks([0,2000,4000,6000])
 grid on;
 hp1 = title('Entfernung','FontSize',12);
 set(hp1,'FontSize',14,'FontWeight','normal'); 
-hp2=legend(LocStr(1:2,:),'location','southeast','NumColumns',1);
+hp2=legend(LocStr(1:2,:),'location','north','NumColumns',1);
 set(hp2,'FontSize',14,'FontWeight','normal');
 legend box off
 set(gca,'FontSize',14);

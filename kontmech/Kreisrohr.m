@@ -59,11 +59,12 @@ xy = model.Mesh.Nodes;
 analytic = dpdz/(4*eta)*(xy(1,:).^2+xy(2,:).^2-1);
 
 %% Darstellen der Lösung
-figure()
+figure(1)
 subplot(1,2,1)
 u = results.NodalSolution;
-pdeplot(model,"XYData",u,"ZData",u,"Mesh","on")
-axis([-1.2 1.2 -1.2 1.2]);
+pdeplot(model,"XYData",u,"ZData",u,"Mesh","off")
+% pdeplot(model,"XYData",u,"Mesh","off")
+axis([-1.2 1.2 -1.2 1.2 0 6]);
 colormap(cmap)
 xlabel("{\itx} in m");
 ylabel("{\ity} in m");
@@ -75,7 +76,7 @@ view([60 20]);
 
 subplot(1,2,2)
 pdeplot(model,"XYData",u(:)-analytic(:),"Mesh","off")
-axis([-1.2 1.2 -1.2 1.2 0 6]);
+axis([-1.2 1.2 -1.2 1.2]);
 colormap(cmap)
 xlabel("{\itx} in m");
 ylabel("{\ity} in m");

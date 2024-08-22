@@ -1,5 +1,5 @@
 % -------------------------------------------------------------------------
-% FreReturTrajectory.m
+% FreReturnTrajectory.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel "Physik der Bewegung" aus
 % "Fingerübungen der Physik" von Michael Kaschke und Holger Cartarius
