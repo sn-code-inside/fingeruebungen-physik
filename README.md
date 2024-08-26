@@ -10,7 +10,7 @@ und
 
 Es enthält Rohdaten und Matlab-Skripte zu den einzelnen Kapiteln.
 
-Weitere [Zusatzmaterialien](https://www.fingeruebungen-physik.de/) zu den Physikalische Fingerübungen finden sich unter dem [Link](https://www.fingeruebungen-physik.de/). 
+Weitere [Zusatzmaterialien](https://www.fingeruebungen-physik.de/) zu den Fingerübungen der Physik finden sich unter dem [Link](https://www.fingeruebungen-physik.de/). 
 
 ## Band I - Mechanik
 

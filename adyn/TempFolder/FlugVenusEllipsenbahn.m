@@ -2,7 +2,7 @@
 % FlugVenusEllipsenbahn.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel Himmelsmechanik aus
-% "Physikalische FingerÃ¼bungen" von Michael Kaschke und Holger Cartarius
+% "Fingerübungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
@@ -37,7 +37,7 @@ TOF       = T2-T1; % Flugzeit in Tagen
 Aequi = 'Datum';
 % Einlesen der Bahnparameter
 [BaPa,BaPadot]=OrbitParameter(T1,Aequi);
-GS  = 2.95479E-04;     % Ã‚ÂµG [AE^3/Tage^2] fÃ¼r Sonne
+GS  = 2.95479E-04;     % µG [AE^3/Tage^2] für Sonne
 G   = 6.671e-11;       % G in in m^3/s^2/kg
 MS  = 1.989e30;        % kg
 muSk= G*MS*1e-9;       % in km^3/s^2
