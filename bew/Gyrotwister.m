@@ -20,10 +20,10 @@ Style = {"-";"--";":"};
 %% Variablen:
 J12  = 1e-5;
 J3   = 2e-5;
-omegaHamp = 0.05; % Bewegung der Hand, Amplitude
+omegaHamp = 0.1; % Bewegung der Hand, Amplitude
 
 % Integrationszeit
-tmax = 10.; % Zahl der Sekunden, die betrachtet werden sollen
+tmax = 20.; % Zahl der Sekunden, die betrachtet werden sollen
 % Startwert fuer die Winkelgeschwindigkeite und Winkel
 omega1 = 0.5*2*pi; % 1/20 von omega3 (Abrollen mit Radienverhältnis 1:50)
 omega3 = 25*2*pi; % Schnelle Rotation des Kreisels
@@ -39,7 +39,7 @@ options = odeset('AbsTol',1.e-8,'RelTol',1.e-6);
 %% Graphische Ausgabe
 figure()
 plot(t1,Y1(:,2)/pi,'Linewidth',1,'Color',Colors(1,:),'LineStyle',Style{1});
-axis([0 tmax 45 60]);
+axis([0 tmax 50 80]);
 ylabel('\omega_3/\pi','FontSize',14);
 xlabel('{\it t} \rm in s ','FontSize',14);
 grid on;

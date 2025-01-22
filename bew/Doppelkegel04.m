@@ -120,26 +120,26 @@ h=title('Phasenraum');
 set(h,'FontSize',12,'FontWeight','normal'); 
 set(gca,'FontSize',16);
 
-% Energiegleichung
+% Energiegleichung für Parametersatz C
 figure();
 hold on
-rp(1)=plot(q(1,:),T_trans(1,:));
-rp(2)=plot(q(1,:),T_rot(1,:));
-rp(3)=plot(q(1,:),U(1,:));
-for k=1:3 
-    set(rp(k),'Color',Colors(k+1,:),'LineWidth',2,'LineStyle',Style(1));
-    line([qmax(1) qmax(1)],[0, max(E0+U(1,:))],'Color',Colors(4,:),'LineWidth',1);
-end
-text(20,1.1*max(U(1,:)),'Parameter A','Color',Colors(4,:));
+% rp(1)=plot(q(1,:),T_trans(1,:));
+% rp(2)=plot(q(1,:),T_rot(1,:));
+% rp(3)=plot(q(1,:),U(1,:));
+% for k=1:3 
+%     set(rp(k),'Color',Colors(k+1,:),'LineWidth',2,'LineStyle',Style(1));
+%     line([qmax(1) qmax(1)],[0, max(E0+U(1,:))],'Color',Colors(4,:),'LineWidth',1);
+% end
+% text(20,1.1*max(U(1,:)),'Parameter A','Color',Colors(4,:));
 rp(4)=plot(q(3,:),T_trans(3,:));
 rp(5)=plot(q(3,:),T_rot(3,:));
 rp(6)=plot(q(3,:),U(3,:));
 for k=1:3 
-    set(rp(k+3),'Color',Colors(k+1,:),'LineWidth',2,'LineStyle',Style(3));
+    set(rp(k+3),'Color',Colors(3,:),'LineWidth',2,'LineStyle',Style(k));
     line([qmax(3) qmax(3)],[0, max(E0+U(3,:))],'Color',Colors(3,:),...
          'LineWidth',1,'LineStyle',Style(3))
 end
-text(20,1.1*max(U(3,:)),'Parameter C','Color',Colors(4,:));
+text(20,1.1*max(U(3,:)),'Parametersatz C','Color',Colors(4,:));
 axis([0 25 0 round(1.2*max(E0+U(3,:))*10)/10]);
 grid on
 xlabel('q in cm','FontSize',14)
