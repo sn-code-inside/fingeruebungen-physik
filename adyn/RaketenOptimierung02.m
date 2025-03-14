@@ -22,8 +22,8 @@
 clc
 clear 
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 Colors=GetColorLines;
 Style = ["-", "-.", ":", "--", ":"];
 

@@ -15,8 +15,8 @@
 clc
 clear all
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 Colors = GetColorLines;
 
 % Daten von JPL Horizons
@@ -24,7 +24,7 @@ fid=fopen('Venus20040608.dat','r');
 if fid ==1 
      disp('File open not successful');
 else
-    VenusJPL = ImportfileJPL('./IncludeFolder/Venus20040608.dat', 2, inf);    
+    VenusJPL = ImportfileJPL('IncludeFolderVenus20040608.dat', 2, inf);    
 end
 closeresult =fclose(fid);
 if closeresult ==0

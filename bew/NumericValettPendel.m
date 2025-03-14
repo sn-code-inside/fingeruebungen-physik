@@ -14,9 +14,9 @@
 clc
 clear 
 close all 
-% addpath('./IncludeFolder/')
-% addpath('./Data/')
-% Colors=GetColorLines;
+addpath('IncludeFolder')
+addpath('Data')
+Colors=GetColorLines;
 
 %% Initialisierung
 % alle Daten in kg, m und s 

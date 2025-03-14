@@ -15,8 +15,8 @@
 clc
 clear 
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 
 dt1 = datetime('1989-01-01 00:00:00');
 dt1 = datetime('2004-06-08 10:00:00');

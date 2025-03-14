@@ -14,8 +14,8 @@
 clc
 clear all
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 Colors = GetColorLines;
  
 % % https://www.timeanddate.com/weather/usa/kailua-kona/historic?month=11&year=2016

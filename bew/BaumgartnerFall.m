@@ -13,8 +13,8 @@
 clc
 clear all
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 Colors = GetColorLines;
 Style = ["-", "-.", ":", "--", ":"];
 Marker = ['o','d','o','s','+'];
@@ -85,7 +85,6 @@ hold on
 plot(zout(:,1)/1000, abs(zout(:,2)),'Linewidth',2,'Color',Colors(4,:));
 axis([0 40 0 400]);
 set(gca,'XDir','reverse');
-grid on
 xlabel('Höhe \it z \rm in km ','FontSize',14);
 ylabel('Geschwindigkeit \it v \rm in m/s ','FontSize',14);
 for k = 1:5 

@@ -2,14 +2,14 @@
 % GravityAssistAnalytisch.m
 % -------------------------------------------------------------------------
 % MATLAB-Programm zum Kapitel "Astrodynamik" aus
-% "FingerÃ¼bungen der Physik" von Michael Kaschke und Holger Cartarius
+% "Fingerübungen der Physik" von Michael Kaschke und Holger Cartarius
 % unter Mitwirkung von Ulrich Potthoff
 % Alle Rechte bei den Autoren
 % Freier Gebrauch mit Buch und/oder Angabe der Quelle erlaubt.
 % -------------------------------------------------------------------------
 % 
-% Programm berechnet verschieden AbhÃƒÂ¤ngigkeiten beim
-% Gravity-Assist-ManÃ¶ver mit analytischen Formeln.
+% Programm berechnet verschieden Abhängigkeiten beim
+% Gravity-Assist-Manöver mit analytischen Formeln.
 %
 % -------------------------------------------------------------------------
 
@@ -17,8 +17,8 @@
 clc
 clear 
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 Colors=GetColorLines;
 Style = ["-", "-.", ":", "--", ":"];
 

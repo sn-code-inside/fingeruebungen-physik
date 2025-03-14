@@ -45,8 +45,8 @@ clear
 close all 
 format long g
 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 Colors = GetColorLines;
 Style = ["-", "-.", ":", "--", ":"];
 

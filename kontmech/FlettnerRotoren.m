@@ -12,8 +12,8 @@
 clc
 clear all
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 
 L = 30;        % Höhe des Rotors
 R = 5;         % Radius des Rotors

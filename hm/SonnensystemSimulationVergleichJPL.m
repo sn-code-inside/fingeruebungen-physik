@@ -19,8 +19,8 @@
 clc
 clear 
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 Style = ["-", "-.", ":", "--", ":"];
 Colors=GetColorLines;
 
@@ -177,7 +177,7 @@ end
 RS =RS/summP;
 
 % Ausgabe Werte Erde in Datenfile
-fileID = fopen('./Data/EarthCalc2022.txt','w');
+fileID = fopen('DataEarthCalc2022.txt','w');
 dtplot= datetime(T1+tA/Tag,'convertfrom','juliandate');
 fprintf(fileID, '%s \t %s \t %s \t %s \n', 't', 'x', 'y', 'z');
 

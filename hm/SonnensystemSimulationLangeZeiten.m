@@ -20,8 +20,8 @@
 clc
 clear 
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 Style = ["-", "-.", ":", "--", ":"];
 Colors=GetColorLines;
 
@@ -258,7 +258,7 @@ set(gca,'FontSize',14)
 %% Ausgabe Werte Erde in Datenfile
 
 %Erde
-fileID = fopen('./Data/EarthCalcLong.txt','w');
+fileID = fopen('DataEarthCalcLong.txt','w');
 dtplot= datetime(T1+tA/Tag,'convertfrom','juliandate');
 fprintf(fileID, '%s \t %s \t %s \t %s \n', 't', 'x', 'y', 'z');
 
@@ -271,7 +271,7 @@ end
 fclose(fileID);
 
 %Erde
-fileID = fopen('./Data/SunCalcLong.txt','w');
+fileID = fopen('DataSunCalcLong.txt','w');
 dtplot= datetime(T1+tA/Tag,'convertfrom','juliandate');
 fprintf(fileID, '%s \t %s \t %s \t %s \n', 't', 'x', 'y', 'z');
 

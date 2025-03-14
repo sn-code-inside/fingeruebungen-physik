@@ -21,8 +21,8 @@
 clc
 clear all
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 
 axmax=2.0;
 xmax=axmax; ymax=axmax; zmax=axmax; % x,y,z Limits

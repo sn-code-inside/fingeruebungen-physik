@@ -16,7 +16,7 @@
 
 clear all
 close all 
-addpath('./IncludeFolder/')
+addpath('IncludeFolder')
 Colors=GetColorLines;
 
 % Vorbereitung Felder

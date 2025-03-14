@@ -12,8 +12,8 @@
 clc
 clear all
 close all 
-addpath('./IncludeFolder/')
-addpath('./Data/')
+addpath('IncludeFolder')
+addpath('Data')
 Colors = GetColorLines;
 
 dD  = 0.004; AD= pi/4*dD^2;      % Austrittsquerschnitt in m^2 
