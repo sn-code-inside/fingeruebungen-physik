@@ -14,7 +14,7 @@ Weitere [Zusatzmaterialien](https://www.fingeruebungen-physik.de/) zu den Finger
 
 ## Band I - Mechanik
 
-![<img src="bew/FingeruebungenSpringer1.jpg" width="250"/>](bew/FingeruebungenSpringer1.jpg)
+[![<img src="bew/FingeruebungenSpringer1.jpg" width="250"/>](bew/FingeruebungenSpringer1.jpg)](https://link.springer.com/book/10.1007/978-3-662-69331-5)
 
 [Physik der Bewegung von Körpern](https://github.com/sn-code-inside/fingeruebungen-physik/tree/main/bew)
 
@@ -22,7 +22,7 @@ Weitere [Zusatzmaterialien](https://www.fingeruebungen-physik.de/) zu den Finger
 
 ## Band II - Himmelsmechanik - Astrodynamik
 
-![<img src="hm/FingeruebungenSpringer2.jpg" width="250"/>](hm/FingeruebungenSpringer2.jpg)
+[![<img src="hm/FingeruebungenSpringer2.jpg" width="250"/>](hm/FingeruebungenSpringer2.jpg)](https://link.springer.com/book/9783662693322)
 
 [Himmelsmechanik](https://github.com/sn-code-inside/fingeruebungen-physik/tree/main/hm)
 
