@@ -6,7 +6,7 @@ Dieses GitHub-Repository ergänzt die Bücher
 
 und
 
-[Fingerübungen der Physik: Himmelsmechanik - Astrodynamik. Ein Repetitorium und Übungsbuch mit MATLAB-Programmen](https://link.springer.com/) von Michael Kaschke und Holger Cartarius (Springer Spektrum 2025)
+[Fingerübungen der Physik: Himmelsmechanik - Astrodynamik. Ein Repetitorium und Übungsbuch mit MATLAB-Programmen](https://link.springer.com/book/9783662693322) von Michael Kaschke und Holger Cartarius (Springer Spektrum 2025)
 
 Es enthält Rohdaten und Matlab-Skripte zu den einzelnen Kapiteln.
 
