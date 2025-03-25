@@ -2,15 +2,15 @@
 
 Dieses GitHub-Repository ergänzt die Bücher
 
-[Fingerübungen der Physik: Mechanik. Ein Repetitorium und Übungsbuch mit MATLAB-Programmen](https://link.springer.com/) von Michael Kaschke (Springer Spektrum 2024)
+[Fingerübungen der Physik: Mechanik. Ein Repetitorium und Übungsbuch mit MATLAB-Programmen](https://link.springer.com/book/10.1007/978-3-662-69331-5) von Michael Kaschke und Holger Cartarius (Springer Spektrum 2025)
 
 und
 
-[Fingerübungen der Physik: Himmelsmechanik - Astrodynamik. Ein Repetitorium und Übungsbuch mit MATLAB-Programmen](https://link.springer.com/) von Michael Kaschke (Springer Spektrum 2024)
+[Fingerübungen der Physik: Himmelsmechanik - Astrodynamik. Ein Repetitorium und Übungsbuch mit MATLAB-Programmen](https://link.springer.com/) von Michael Kaschke und Holger Cartarius (Springer Spektrum 2025)
 
 Es enthält Rohdaten und Matlab-Skripte zu den einzelnen Kapiteln.
 
-Weitere [Zusatzmaterialien](https://www.fingeruebungen-physik.de/) zu den Fingerübungen der Physik finden sich unter dem [Link](https://www.fingeruebungen-physik.de/). 
+Weitere [Zusatzmaterialien](https://www.fingeruebungen-physik.de/) zu den Fingerübungen der Physik finden sich unter [https://www.fingeruebungen-physik.de/](https://www.fingeruebungen-physik.de/). 
 
 ## Band I - Mechanik
 
