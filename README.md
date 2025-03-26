@@ -10,7 +10,7 @@ und
 
 Es enthält Rohdaten und Matlab-Skripte zu den einzelnen Kapiteln.
 
-Weitere [Zusatzmaterialien](https://www.fingeruebungen-physik.de/) zu den Fingerübungen der Physik finden sich unter [https://www.fingeruebungen-physik.de/](https://www.fingeruebungen-physik.de/). Dies umfasst derzeit ein [Arbeitsbuch zu Band I - Mechanik](https://cdn.website-editor.net/d36068b361d648f285981ed0fb870a53/files/uploaded/FingerUeb1_AB.pdf), ein [Arbeitsbuch zu Band II - Himmelsmechanik - Astrodynamik](https://cdn.website-editor.net/d36068b361d648f285981ed0fb870a53/files/uploaded/FingerUeb2_AB.pdf) sowie einen [MATLAB-Anhang](https://cdn.website-editor.net/d36068b361d648f285981ed0fb870a53/files/uploaded/FingerUeb2_MATLAB.pdf).
+Weitere [Zusatzmaterialien](https://www.fingeruebungen-physik.de/) zu den Fingerübungen der Physik finden sich unter [https://www.fingeruebungen-physik.de/](https://www.fingeruebungen-physik.de/). Dies umfasst derzeit ein [Arbeitsbuch zu Band I - Mechanik](https://cdn.website-editor.net/d36068b361d648f285981ed0fb870a53/files/uploaded/FingerUeb1_AB.pdf), ein [Arbeitsbuch zu Band II - Himmelsmechanik - Astrodynamik](https://cdn.website-editor.net/d36068b361d648f285981ed0fb870a53/files/uploaded/FingerUeb2_AB.pdf) sowie einen [MATLAB-Anhang](https://cdn.website-editor.net/d36068b361d648f285981ed0fb870a53/files/uploaded/FingerUeb_MATLAB.pdf).
 
 ## Band I - Mechanik
 
