@@ -32,18 +32,32 @@ Colors = GetColorLines;
 % Initialisierung
 SunData = PerturbImport('SonnePos.csv');
 
-% Startdaten
-% z.B.
-% Oberkochen 
-phi  =  48.1;
-lambda = 10.9;
-d_0   = "11-Aug-1999 09:30:00"; %(UT)
-
-% oder
+% % Startdaten
+% % z.B.
+% % Oberkochen 
+% phi  =  48.1;
+% lambda = 10.9;
+% d_0   = "11-Aug-1999 09:30:00"; %(UT)
+% 
+% % oder
 % Snake River 2017
-% phi  =  44.3 ;
-% lambda = -117.1;
-% d_0   = "21-Aug-2017 17:30:00"; %(UT)
+phi  =  44.3 ;
+lambda = -117.1;
+d_0   = "21-Aug-2017 17:30:00"; %(UT)
+
+
+% % Startdaten
+% % Reykjavik 
+% phi  =  64.1466;
+% lambda = 33.8116;
+% d_0   = "12-Aug-2026 14:30:00"; %(UT)
+% 
+% Startdaten
+% Marsa Alem 
+phi  =  24.0;
+lambda = 35.3;
+d_0   = "02-Aug-2027 08:00:00"; %(UT)
+
 
 SITE = Site(phi);
 dt_0  = datetime(d_0,'InputFormat','dd-MMM-yyyy HH:mm:ss');
@@ -160,9 +174,7 @@ function CONTACTS = contacts(t_F, DelTSec, lambda, SITE, SunData)
     EPS   = 1.0E-10;      % Toleranz fuer Kontaktzeitensuche (ca. 0.3s) 
     t_Max = NaN;
     % Initialisierung   
-    for i = 1:4 
-        CONTACTS.times(i) = t_F;
-    end
+    CONTACTS.times = NaN(1,4);
     %----------------------------------------------------------------------  
     % Suche nach dem 1. und 4. Kontakt mit quadratischer Interpolation.       
     %                                                                         
@@ -295,15 +307,15 @@ function CONTACTS = contacts(t_F, DelTSec, lambda, SITE, SunData)
     %---------------------------------------------------------------------- 
     if strcmp(PHASE,'ringfoermig') || strcmp(PHASE,"total")
         
-       DT0 = 0.10/CENT; % +- 6 min in julianischen Jahrhunderten   
-       DT = 0.10/60/12/CENT; % +- 5 sec in julianischen Jahrhunderten   
+       DT0 = 7/(60*CENT);       % Suchbereich: 7 Minuten vor/nach Maximum
+       DT  = 0.5/(3600*CENT);   % Schrittweite: 0.5 Sekunden       
        shadow = 'total';
        ts = t_MAX-DT0;
        y1 = sha_dist(shadow,ts , DelTSec, lambda, SITE, SunData);
        y2 = sha_dist(shadow,ts+DT, DelTSec, lambda, SITE, SunData);
        ncontacts34 =0;
        zaehler = 1;
-       while ncontacts34 <2 && zaehler < 1000
+       while ncontacts34 < 2 && ts < t_MAX + DT0
            if y1*y2 < 0 
                if y1 > 0
                    CONTACTS.times(2) = ts + DT/2;
@@ -331,6 +343,10 @@ function CONTACTS = contacts(t_F, DelTSec, lambda, SITE, SunData)
     CONTACTS.MAG = MAG;
     CONTACTS.PHASE = PHASE;
 end
+if any(isnan(CONTACTS.times(2:3)))
+    warning('Zweiter oder dritter Kontakt im Suchintervall nicht gefunden.');
+end
+
 %--------------------------------------------------------------------------
 % Ende Funktion contacts
 %--------------------------------------------------------------------------
