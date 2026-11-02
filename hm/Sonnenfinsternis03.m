@@ -53,10 +53,46 @@ d_0   = "21-Aug-2017 17:30:00"; %(UT)
 % d_0   = "12-Aug-2026 14:30:00"; %(UT)
 % 
 % Startdaten
-% Marsa Alem 
-phi  =  24.0;
-lambda = 35.3;
+strloc="Steigenberger Coraya Beach";
+phi  =  25.6;
+lambda = 34.6;
 d_0   = "02-Aug-2027 08:00:00"; %(UT)
+
+strloc="Mövenpick El Quseir";
+phi  =  26.15;
+lambda = 34.25;
+d_0   = "02-Aug-2027 08:00:00"; %(UT)
+
+strloc="JAZ Costa Mares";
+phi  =  25.5;
+lambda = 34.65;
+d_0   = "02-Aug-2027 08:00:00"; %(UT)
+
+strloc ="Sfax Tunesien";
+phi  =  34.75;
+lambda = 10.75;
+d_0   = "02-Aug-2027 08:00:00"; %(UT)
+
+strloc="Sharm El Luli, Halayeb We Shalateen Rd";
+phi = 24.613718097034308;
+lambda = 35.1164046417131;
+d_0   = "02-Aug-2027 08:00:00"; %(UT)
+
+strloc ="Spanien";
+phi  =  37.15094092192828;
+lambda = -6.5512567115485529;
+d_0   = "26-Jan-2028 14:00:00"; %(UT)
+
+strloc="Sharm El Luli, Halayeb We Shalateen Rd";
+phi = 24.613718097034308;
+lambda = 35.1164046417131;
+d_0   = "02-Aug-2027 08:00:00"; %(UT)
+
+% strloc="Ägypten Zentrallinie";
+% phi = 24.3093;
+% lambda = 34.9135;
+% d_0   = "02-Aug-2027 08:00:00"; %(UT)
+
 
 
 SITE = Site(phi);
@@ -82,7 +118,9 @@ if ~strcmpi(CONTACTS.PHASE,'keine Finsternis')
 end
     zeit =   datetime(JJht2Jd(CONTACTS.t_MAX),'ConvertFrom','juliandate');
     outstr_max = string(zeit,'dd-MMM-yyyy HH:mm:ss')+" UT";
-    fprintf('\n Lokale Umstaende der Sonnenfinsternis fuer  \n ');
+    fprintf('\n Lokale Umstaende der Sonnenfinsternis fuer : ');
+    fprintf(strloc);
+    fprintf('\n ');
     fprintf('\n Datum: %s   Breite: %s° Laenge: %s°  \n ',...
               string(dt_0, 'dd-MMM-yyyy'), ...
               num2str(phi, '%+5.2f'), num2str(lambda,'%+5.2f'));
@@ -438,7 +476,6 @@ end
 %  SHA_DIST    Abstand Beobachter-Schattenmitte in [Erdradien]
 %
 function SHA_DIST = sha_dist(shadow, t_UT, DelTSec, lambda, SITE, SunData)
-    K_Moon = 0.2725076; %RM/RE
     % Beobachter- und Schattenkoordinaten im System der Fundamentalebene   
     BESSEL = bessel  (t_UT, DelTSec, SunData);
     Obs    = Observer(t_UT, lambda , SITE, BESSEL);
@@ -480,48 +517,118 @@ end
 %   L2          Radius des Umbra-Schattenkegels auf der Fundamentalebene
 %               in [Erdradien]
 %--------------------------------------------------------------------------
+
 function BESSEL = bessel(t_UT, DelTSec, SunData)
+% -------------------------------------------------------------------------
+% BESSEL
+% Berechnet die Besselschen Elemente einer Sonnenfinsternis.
+%
+% Eingabe:
+%   t_UT       Zeit in Julianischen Jahrhunderten seit J2000 (UT)
+%   DelTSec    Delta T = TT - UT in Sekunden
+%   SunData    Parameter der Sonnenephemeride
+%
+% Ausgabe:
+%   BESSEL.IJK1, IJK2, IJK3
+%              Basisvektoren der Fundamentalebene
+%   BESSEL.SH  Koordinaten der Schattenachse in Erdradien
+%   BESSEL.f1  Halber Öffnungswinkel des Halbschattenkegels [rad]
+%   BESSEL.f2  Halber Öffnungswinkel des Kernschattenkegels [rad]
+%   BESSEL.l1  Halbschattenradius in der Fundamentalebene [RE]
+%   BESSEL.l2  Vorzeichenbehafteter Kernschattenradius [RE]
+%
+% Konvention:
+%   l2 < 0 : totale Sonnenfinsternis (Umbra)
+%   l2 > 0 : ringförmige Sonnenfinsternis (Antumbra)
+%
+% Mondradius-Konstanten nach NASA/Espenak:
+%   k1 = 0.272488 für den Halbschatten
+%   k2 = 0.272281 für den Kernschatten
+% -------------------------------------------------------------------------
 
-% Berechnet Orientierung (IJK) der Hauptebene, Koordinaten Schattenmitte
-% Vec SH und Parameter des Schattenkegels W1, D1, W2, D2
-    K_Moon = 0.2725076; %RM/RE
-    K_Sun  = 109.1227;  %RS/RE  
-    tau = 8.32/1440/36525; %Lichtlaufzeit;
-    epsE=deg2rad(23.43929111);
+    % Konstanten (in Einheiten des Erdradius)
+    K_Moon_P = 0.272488;    % Mondradius für Penumbra
+    K_Moon_U = 0.272281;    % Mondradius für Umbra
+    K_Sun    = 109.1227;    % Sonnenradius
 
+    % Lichtlaufzeit Sonne-Erde in Julianischen Jahrhunderten
+    tau = 8.32 / 1440 / 36525;
 
-    t_ET = t_UT + DelTSec/86400/36525;
-    SunPos = SonneExakt(t_ET-tau,SunData,epsE,'RE'); %Beachte tau ! 
-    MoonPos = MondExakt(t_ET,epsE,'RE');
-    
-    X_M = MoonPos.geo; %kartes. aequatoriale Koord. v. Mond und Sonne
+    % Schiefe der Ekliptik (bisherige Modellkonvention)
+    % Umrechnung UT -> Ephemeridenzeit
+    t_ET = t_UT + DelTSec / (86400 * 36525);
+    epsE = deg2rad(EpsErde(JJht2Jd(t_ET)));
+
+    % Geozentrische Koordinaten von Sonne und Mond
+    % in Erdradien
+    SunPos  = SonneExakt(t_ET - tau, SunData, epsE, 'RE');
+    MoonPos = MondExakt(t_ET, epsE, 'RE');
+
+    X_M = MoonPos.geo;
     X_S = SunPos.geo;
-    
-    X_MS   = X_S-X_M;
-    R_MS   = norm(X_MS);
-    E_XS   = X_MS/R_MS; %Richtungsvektor Sonne-Mond
-    %Neues Koordinatensystem IJK fuer Fundamentalebene
-    BESSEL.IJK3   = E_XS;
-    DIST   = sqrt(E_XS(1)*E_XS(1)+E_XS(2)*E_XS(2));
-    BESSEL.IJK1   = [-E_XS(2)/DIST;+E_XS(1)/DIST;0];
-    BESSEL.IJK2   = cross(BESSEL.IJK3, BESSEL.IJK1);
-    %Mondkoordinaten auf der Fundamentalebene
-    BESSEL.SH    = [dot(X_M, BESSEL.IJK1);dot(X_M, BESSEL.IJK2); ...
-                    dot(X_M, BESSEL.IJK3)];
-    %Entfernung Sonne-Mond
-    %Schattenkegel
-    BESSEL.f1    = asin((K_Sun+K_Moon)/R_MS);
-    BESSEL.f2    = asin((K_Sun-K_Moon)/R_MS);
 
-    BESSEL.l1    = BESSEL.SH(3)*(K_Sun+K_Moon)/R_MS + K_Moon;
-    BESSEL.l2    = BESSEL.SH(3)*(K_Sun-K_Moon)/R_MS - K_Moon;
-    
-    BESSEL.v1    = K_Moon*DIST/(K_Sun+K_Moon);
-    BESSEL.v2    = K_Moon*DIST/(K_Sun-K_Moon);
+    % Richtungsvektor Mond -> Sonne
+    X_MS = X_S - X_M;
+    R_MS = norm(X_MS);
+
+    E_XS = X_MS / R_MS;
+
+    % -------------------------------------------------------------
+    % Orthogonales Koordinatensystem der Fundamentalebene
+    % -------------------------------------------------------------
+
+    BESSEL.IJK3 = E_XS;
+
+    DIST = hypot(E_XS(1), E_XS(2));
+
+    BESSEL.IJK1 = [-E_XS(2)/DIST;
+                    E_XS(1)/DIST;
+                    0];
+
+    BESSEL.IJK2 = cross(BESSEL.IJK3, BESSEL.IJK1);
+
+    % -------------------------------------------------------------
+    % Projektion der Mondposition auf das Fundamentalsystem
+    % -------------------------------------------------------------
+
+    BESSEL.SH = [dot(X_M, BESSEL.IJK1);
+                 dot(X_M, BESSEL.IJK2);
+                 dot(X_M, BESSEL.IJK3)];
+
+    % -------------------------------------------------------------
+    % Öffnungswinkel der Schattenkegel
+    % -------------------------------------------------------------
+
+    % Halbschatten (Penumbra)
+    BESSEL.f1 = asin((K_Sun + K_Moon_P) / R_MS);
+
+    % Kernschatten bzw. Gegenkernschatten (Umbra/Antumbra)
+    BESSEL.f2 = asin((K_Sun - K_Moon_U) / R_MS);
+
+    % -------------------------------------------------------------
+    % Schattenradien in der Fundamentalebene
+    % -------------------------------------------------------------
+
+    % Halbschattenradius
+    BESSEL.l1 = BESSEL.SH(3) * ...
+                (K_Sun + K_Moon_P) / R_MS + K_Moon_P;
+
+    % Vorzeichenbehafteter Kernschattenradius
+    BESSEL.l2 = BESSEL.SH(3) * ...
+                (K_Sun - K_Moon_U) / R_MS - K_Moon_U;
+
+    % -------------------------------------------------------------
+    % Zusätzliche geometrische Parameter
+    % -------------------------------------------------------------
+
+    BESSEL.v1 = K_Moon_P * DIST / (K_Sun + K_Moon_P);
+    BESSEL.v2 = K_Moon_U * DIST / (K_Sun - K_Moon_U);
+
 end
 %-------------------------------------------------------------------------
 % Ende Funktion bessel
 %-------------------------------------------------------------------------
+
 
 %--------------------------------------------------------------------------
 function OBS = Observer(t_UT, lambda, SITE, BESSEL)

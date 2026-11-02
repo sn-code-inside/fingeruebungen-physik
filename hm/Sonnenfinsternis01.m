@@ -37,10 +37,6 @@ SunData = PerturbImport('SonnePos.csv');
 MPhase = 0; 
 % Parametrisierte Funktion zur Berechnung der relativen Phasenlage der 
 % Laengen von Mond und Sonne
-myfunc = @(x,a,b) PhaseFunc(x,SunData,MPhase);  
-a  = SunData; b  = MPhase; % Parameter
-% Function Handle
-func = @(T) myfunc(T,a,b);    % Funktion von T mit a, b Parameter
 
 Jahr0 = 2021;
 n_years  = 30;  % Anzahl der Jahre
@@ -56,7 +52,9 @@ titlestr(2,:) = 'Mondfinsternisse';
 for iPlot = 1:2
     disp('berechnet die Daten');
     MPhase= (iPlot-1)*2; %0 Neumond  2 Vollmond
-   % Zunaechst Abfrage der Zeitpunkte der Neumond/Vollmondzeitpunkte
+    % Funktionshandle für die aktuelle Mondphase
+    % Abfrage der Zeitpunkte der Neumond/Vollmondzeitpunkte
+    func = @(t) PhaseFunc(t,SunData,MPhase);
     for k= 1:n_years
         Jahr = Jahr0+k;
         dt0 = datetime(Jahr,12,01); %Startdatum ET

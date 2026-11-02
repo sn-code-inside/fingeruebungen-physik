@@ -69,7 +69,8 @@ function SunPos = SonneExakt(t,SunData,epsE, rMass)
     for k =25:37
       i5 = SunData(k,2);
       i7 = SunData(k,3);
-      ct  = cos(i5*M3+i6*M4); st=sin(i5*M3+i7*M4);
+      ct = cos(i5*M3+i7*M4);
+      st = sin(i5*M3+i7*M4);
       dlt = SunData(k,5)*ct+SunData(k,6)*st;
       drt = SunData(k,7)*ct+SunData(k,8)*st;
       dbt = SunData(k,9)*ct+SunData(k,10)*st;
@@ -81,7 +82,8 @@ function SunPos = SonneExakt(t,SunData,epsE, rMass)
     for k =39:50
       i5 = SunData(k,2);
       i7 = SunData(k,3);
-      ct  = cos(i5*M3+i6*M5); st=sin(i5*M3+i7*M5);
+      ct = cos(i5*M3+i7*M5);
+      st = sin(i5*M3+i7*M5);
       dlt = SunData(k,5)*ct+SunData(k,6)*st;
       drt = SunData(k,7)*ct+SunData(k,8)*st;
       dbt = SunData(k,9)*ct+SunData(k,10)*st;
@@ -93,7 +95,8 @@ function SunPos = SonneExakt(t,SunData,epsE, rMass)
     for k =52:55
       i5 = SunData(k,2);
       i7 = SunData(k,3);
-      ct  = cos(i5*M3+i6*M6); st=sin(i5*M3+i7*M6);
+      ct = cos(i5*M3+i7*M6);
+      st = sin(i5*M3+i7*M6);
       dlt = SunData(k,5)*ct+SunData(k,6)*st;
       drt = SunData(k,7)*ct+SunData(k,8)*st;
       dbt = SunData(k,9)*ct+SunData(k,10)*st;

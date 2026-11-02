@@ -106,7 +106,8 @@ else
   if strcmpi(rMass,'km') 
      fac = 1*6378.137; % r in km
   else
-     fac =149597870.700/6378.137;  % r in AE Einheiten
+     % fac =149597870.700/6378.137;  % r in AE Einheiten
+     fac = 6378.137/149597870.700;
   end
 end
 MoonPos.ekl = [del*fac; deg2rad(la); deg2rad(ba)]; % geo-ekliptikal

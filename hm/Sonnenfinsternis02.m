@@ -33,12 +33,10 @@ SunData = PerturbImport('SonnePos.csv');
 
 % Bestimmung der Zentrallinien 
 d_0(1,:)   = "11-Aug-1999 11:00:00"; %(UT)
-d_0(1,:)   = "14-Oct-2023 17:00:00"; %(UT)
 d_0(2,:)   = "29-Mar-2006 10:00:00"; %(UT)
 d_0(3,:)   = "21-Aug-2017 17:00:00"; %(UT)
 d_0(4,:)   = "08-Apr-2024 18:00:00"; %(UT)
 d_1(1,:)   = "11.08.1999"; %(UT)
-d_1(1,:)   = "14.10.2023"; %(UT)
 d_1(2,:)   = "29.03.2006"; %(UT)
 d_1(3,:)   = "21.08.2017"; %(UT)
 d_1(4,:)   = "08.04.2024"; %(UT)
@@ -122,7 +120,6 @@ set(gca,'FontSize',16);
 % -------------------------------------------------------------------------
 % Ende Programm
 % -------------------------------------------------------------------------
-geoplot
 
 %__________________________________________________________________________
 %%
@@ -151,18 +148,18 @@ function ZL = Central (t, DelTSec, SunData)
         RA  = rad2deg(SA.equ(2));
         phi      = rad2deg(Dec) + 0.1924*sin(2*Dec); %in rad
         lambda   = wrapTo180(-15*LMST(MJD_UT,0.0)+RA); 
+
         MoonPos2 = MondExakt(t+dt/MPC,epsE,'RE');
-        SunPos2  = SonneExakt(t+dt/MPC-tau,SunData,epsE,'RE'); 
+        SunPos2  = SonneExakt(t+dt/MPC-tau,SunData,epsE,'RE');
+        
         SA2 = SAchse(MoonPos2, SunPos2);
-        if SA2.Phase == "ringfoermig" 
-            MoonPos2 = MondExakt(t-dt/MPC,epsE,'RE');
-            SunPos2  = SonneExakt(t-dt/MPC-tau,SunData,epsE,'RE'); 
-            SA2 = SAchse(MoonPos2, SunPos2);
-        end
+        
         W = dt*Omega;
+        
         DX = SA2.xyz(1)-SA.xyz(1)+W*SA.xyz(2);
         DY = SA2.xyz(2)-SA.xyz(2)-W*SA.xyz(1);
-        DZ = SA2.xyz(3)-SA.xyz(3);
+        DZ = SA2.xyz(3)-SA.xyz(3);        
+        
         VecD = [DX;DY;DZ];
         D    = sqrt(norm(VecD)^2-sum(VecD .*SA.E_XS)*sum(VecD .*SA.E_XS));
         T_KS = dt*abs(SA.DKS)/D;       
@@ -188,8 +185,10 @@ end
 % Berechnung der Schattenachse der SoFi
 function SA = SAchse(MoonKoord, SunKoord)
    fac = 0.996633; % Abplattung Erde
-   DM  = 0.5450;   % Monddurchmesser in Erdradien
-   DS  = 218.25;   % Sonnendurchmesser in Erdradien
+   DM_P = 2*0.272488;   % Monddurchmesser für Halbschatten
+   DM_U = 2*0.272281;   % Monddurchmesser für Kernschatten
+   DS   = 2*109.1227;   % Sonnendurchmesser
+
    X_M = MoonKoord.geo; % kartes. aequatoriale Koord. v. Mond und Sonne
    X_S = SunKoord.geo;
    X_M(3) = X_M(3)/fac; % Streckung der z-Koordinate wg Abplattung
@@ -200,12 +199,13 @@ function SA = SAchse(MoonKoord, SunKoord)
    p0     = -sum(X_M .* E_XS);  % Entfernung Mond-Hauptebene
    Dqua   = p0*p0 + 1.0-norm(X_M)^2;
    r0     = sqrt(1-Dqua);       % Entfernung Erdmitte-Schattenachse
-   DKS    = (DS-DM)*p0/R_MS-DM; % Durchmesser Kernschatten auf Hauptebene
-   DHS    = (DS+DM)*p0/R_MS+DM; % Durchmesser Halbschatten auf Hauptebene
+  
+   DKS = (DS-DM_U)*p0/R_MS-DM_U; % Durchmesser Kernschatten auf Hauptebene
+   DHS = (DS+DM_P)*p0/R_MS+DM_P; % Durchmesser Halbschatten auf Hauptebene
    XB = [NaN;NaN;NaN];
    if r0 < 1.0 %Schattenachse trifft auf Erde
       p   = p0 -sqrt(Dqua);
-      DKS = (DS-DM)*(p/R_MS)-DM;% Durchmesser Kernschatten auf Erdoberflaeche
+      DKS = (DS-DM_U)*p/R_MS-DM_U;% Durchmesser Kernschatten auf Erdoberflaeche
       XB  = X_M + p*E_XS;       % kartesisches Koordinaten des Schattenkegels
       XB(3) = XB(3)*fac;        % Rueckrechnung der Abplattung
       if DKS > 0 
